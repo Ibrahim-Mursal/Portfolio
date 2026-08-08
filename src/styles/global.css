@@ -1,39 +1,37 @@
 /*
  * Design system.
  *
- * Colour discipline: one accent carries every piece of emphasis on the site
- * (azure, for trust), and one warm colour is reserved exclusively for the
- * primary call to action and the "live in production" badge. If a third
- * colour starts appearing, something has gone wrong.
+ * Palette taken from the CV so the two read as one identity: deep navy for
+ * structure and every piece of emphasis, CV orange for attention only.
+ *
+ * Orange is never text. At #EFA134 it sits around 1.9:1 on white, which fails
+ * every contrast threshold. It appears as fills, rules and geometry, and any
+ * text sitting on it is navy. Links and labels are navy, which clears 7:1.
  */
 
 :root {
-  /* Ink base, cool rather than neutral black, so the azure sits in it. */
-  --ink-900: #070b14;
-  --ink-850: #0a101c;
-  --ink-800: #0e1524;
-  --ink-750: #131c2e;
-  --ink-700: #1a2438;
-  --ink-600: #263148;
+  --navy-900: #0d2340;
+  --navy-800: #13314f;
+  --navy-700: #1b4470;
+  --navy-600: #245a90;
+  --navy-500: #3d76ad;
 
-  --text-100: #f2f5fb;
-  --text-200: #d5dced;
-  --text-300: #a3aec6;
-  --text-400: #78829a;
-  --text-500: #5a6379;
+  --orange-400: #f5b862;
+  --orange-500: #efa134;
+  --orange-600: #d9871a;
 
-  /* Trust accent. Every link, rule, marker and highlight. */
-  --azure-400: #7fa2ff;
-  --azure-500: #4c7dff;
-  --azure-600: #2f5fe0;
-  --azure-glow: rgba(76, 125, 255, 0.14);
+  --paper: #ffffff;
+  --paper-50: #f8f9fb;
+  --paper-100: #f1f4f8;
+  --paper-200: #e5eaf1;
 
-  /* Attention. Primary CTA and live badges only. */
-  --amber-400: #ffc266;
-  --amber-500: #ffab33;
+  --text-900: #0d2340;
+  --text-700: #33475f;
+  --text-600: #4a5d75;
+  --text-500: #5a6b82;
 
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.13);
+  --border: #e2e8f0;
+  --border-strong: #cbd5e2;
 
   --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -43,12 +41,12 @@
   --shell: 1180px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
 
-  --radius: 14px;
-  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-sm: 7px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 *,
@@ -73,14 +71,13 @@ html {
 }
 
 body {
-  background: var(--ink-900);
-  color: var(--text-200);
+  background: var(--paper);
+  color: var(--text-700);
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.65;
   font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
-  /* The one guard that keeps a wide table or code block from scrolling the page. */
   overflow-x: hidden;
 }
 
@@ -92,19 +89,19 @@ svg {
 }
 
 a {
-  color: var(--azure-400);
-  text-decoration-color: rgba(127, 162, 255, 0.35);
+  color: var(--navy-700);
+  text-decoration-color: rgba(27, 68, 112, 0.32);
   text-underline-offset: 0.2em;
   transition: color 0.18s var(--ease), text-decoration-color 0.18s var(--ease);
 }
 
 a:hover {
-  color: var(--text-100);
+  color: var(--navy-900);
   text-decoration-color: currentColor;
 }
 
 :focus-visible {
-  outline: 2px solid var(--azure-500);
+  outline: 2px solid var(--navy-700);
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -115,9 +112,9 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.02em;
-  color: var(--text-100);
+  color: var(--text-900);
   text-wrap: balance;
 }
 
@@ -135,11 +132,12 @@ p {
 }
 
 .section {
-  padding-block: clamp(4.5rem, 11vw, 8.5rem);
+  padding-block: clamp(3.5rem, 9vw, 6.5rem);
 }
 
-.section + .section {
-  border-top: 1px solid var(--border);
+.section--tint {
+  background: var(--paper-50);
+  border-block: 1px solid var(--border);
 }
 
 .skip {
@@ -148,7 +146,7 @@ p {
   top: 0;
   z-index: 100;
   padding: 0.7rem 1.1rem;
-  background: var(--azure-500);
+  background: var(--navy-800);
   color: #fff;
   font-weight: 600;
   border-radius: 0 0 var(--radius-sm) 0;
@@ -160,41 +158,57 @@ p {
 
 /* ------------------------------------------------------------- typography */
 
+/*
+ * Section label. The orange mark is the CV's chevron, reduced to a single
+ * triangle, and it is decoration: the text itself is navy.
+ */
 .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--azure-400);
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--navy-700);
 }
 
 .eyebrow::before {
   content: '';
-  width: 1.75rem;
-  height: 1px;
-  background: var(--azure-500);
   flex: none;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid var(--orange-500);
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  margin-top: 1.1rem;
+  font-size: clamp(1.6rem, 3.6vw, 2.25rem);
+  margin-top: 0.9rem;
 }
 
 .lede {
-  font-size: clamp(1.0625rem, 2vw, 1.1875rem);
-  color: var(--text-300);
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+  color: var(--text-600);
   max-width: var(--measure);
-  margin-top: 1.1rem;
+  margin-top: 0.9rem;
 }
 
 .mono {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
-  letter-spacing: 0.01em;
+}
+
+/* Small caps-ish label used above sidebar blocks and field names. */
+.label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-900);
 }
 
 /* ----------------------------------------------------------------- badges */
@@ -202,15 +216,16 @@ p {
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 0.3rem 0.6rem;
+  padding: 0.25rem 0.55rem;
   border-radius: 999px;
   border: 1px solid var(--border-strong);
-  color: var(--text-300);
+  color: var(--text-600);
+  background: var(--paper);
   white-space: nowrap;
 }
 
@@ -223,21 +238,16 @@ p {
   flex: none;
 }
 
-/* The warm colour appears here and on the primary button. Nowhere else. */
+/* In-use work gets the orange dot. The text stays navy for contrast. */
 .badge--live {
-  color: var(--amber-400);
-  border-color: rgba(255, 171, 51, 0.32);
-  background: rgba(255, 171, 51, 0.07);
+  color: var(--navy-800);
+  border-color: var(--orange-500);
+  background: #fdf4e6;
 }
 
 .badge--live::before {
-  box-shadow: 0 0 0 3px rgba(255, 171, 51, 0.18);
-}
-
-.badge--active {
-  color: var(--azure-400);
-  border-color: rgba(76, 125, 255, 0.32);
-  background: var(--azure-glow);
+  background: var(--orange-600);
+  box-shadow: 0 0 0 3px rgba(239, 161, 52, 0.28);
 }
 
 /* ---------------------------------------------------------------- buttons */
@@ -245,8 +255,8 @@ p {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.8rem 1.3rem;
+  gap: 0.55rem;
+  padding: 0.78rem 1.25rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.9375rem;
@@ -256,26 +266,38 @@ p {
     border-color 0.18s var(--ease), color 0.18s var(--ease);
 }
 
+/* Navy text on orange clears 8:1. */
 .btn--primary {
-  background: var(--amber-500);
-  color: #21160a;
+  background: var(--orange-500);
+  color: var(--navy-900);
 }
 
 .btn--primary:hover {
-  background: var(--amber-400);
-  color: #21160a;
+  background: var(--orange-400);
+  color: var(--navy-900);
+  transform: translateY(-2px);
+}
+
+.btn--solid {
+  background: var(--navy-800);
+  color: #fff;
+}
+
+.btn--solid:hover {
+  background: var(--navy-900);
+  color: #fff;
   transform: translateY(-2px);
 }
 
 .btn--ghost {
   border-color: var(--border-strong);
-  color: var(--text-200);
+  color: var(--navy-800);
+  background: var(--paper);
 }
 
 .btn--ghost:hover {
-  border-color: var(--azure-500);
-  color: var(--text-100);
-  background: var(--azure-glow);
+  border-color: var(--navy-700);
+  color: var(--navy-900);
   transform: translateY(-2px);
 }
 
@@ -291,20 +313,20 @@ p {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--ink-850);
+  background: var(--paper);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: border-color 0.22s var(--ease), transform 0.22s var(--ease),
-    background 0.22s var(--ease);
+    box-shadow 0.22s var(--ease);
 }
 
 .card:hover {
   border-color: var(--border-strong);
-  background: var(--ink-800);
   transform: translateY(-3px);
+  box-shadow: 0 14px 32px -18px rgba(13, 35, 64, 0.32);
   color: inherit;
 }
 
@@ -316,24 +338,20 @@ p {
 
 /* -------------------------------------------------------------- utilities */
 
-.stack > * + * {
-  margin-top: var(--stack-gap, 1rem);
-}
-
 hr.rule {
   border: 0;
   border-top: 1px solid var(--border);
-  margin-block: 2.5rem;
+  margin-block: 2.25rem;
 }
 
 /*
  * Scroll reveal.
  *
- * The hiding rule is gated behind `.js` on the html element, which is set by
- * an inline script in the head. Without that gate, a JavaScript failure of
- * any kind ships a completely blank page, which is how the previous build of
- * this site nearly went out. The script also force-reveals everything after
- * 2.5 seconds if the observer never fires.
+ * The hiding rule is gated behind `.js` on the html element, set by an inline
+ * script in the head. Without that gate a JavaScript failure of any kind ships
+ * a blank page, which is how the first build of this site nearly went out. The
+ * script also force-reveals everything after 2.5 seconds if the observer never
+ * fires.
  */
 .js .reveal {
   opacity: 0;

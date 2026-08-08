@@ -1,7 +1,7 @@
 /**
- * The six projects, and the only place their content lives.
+ * The five projects, and the only place their content lives.
  *
- * Adding a seventh project means adding one object to this array. The work
+ * Adding a sixth project means adding one object to this array. The work
  * index, the home grid and the case-study page are all generated from it.
  *
  * Content rule, carried over from the first build of this site: every claim
@@ -33,14 +33,17 @@ export interface Project {
   summary: string;
   kind: string;
   year: string;
-  /** Shown as a badge. `live` gets the warm accent. */
-  status: 'live' | 'active' | 'delivered';
+  /** Shown as a badge. `live` gets the orange dot. */
+  status: 'live' | 'delivered';
   statusLabel: string;
   stack: string[];
-  /** Hue in degrees for the generated cover pattern. */
-  hue: number;
+  /**
+   * Seed for the cover's deterministic arrangement. Not a colour: covers are
+   * navy and orange like everything else, and the motif carries the difference.
+   */
+  seed: number;
   /** Which motif the cover component draws. */
-  cover: 'grid' | 'ledger' | 'bloom' | 'arc' | 'stack' | 'tower';
+  cover: 'grid' | 'ledger' | 'bloom' | 'arc' | 'stack';
   /** The situation before the work. */
   brief: string;
   role: string;
@@ -66,7 +69,7 @@ export const projects: Project[] = [
     status: 'live',
     statusLabel: 'Live, in daily use',
     stack: ['C#', '.NET 8', 'WPF', 'ASP.NET Core', 'EPL / PPLB', 'Win32 spooler'],
-    hue: 262,
+    seed: 262,
     cover: 'grid',
     brief:
       'A perfume shop was printing its product labels through BarTender on an Argox CP-3140L thermal printer. The licence and the workflow both had to go, and the replacement had to match the old label geometry exactly, because the blank label stock was already bought and the shelf layout was built around it.',
@@ -126,7 +129,7 @@ export const projects: Project[] = [
     status: 'live',
     statusLabel: 'Live, in daily use',
     stack: ['React 19', 'Vite', 'Express 5', 'SQLite', 'i18n / RTL'],
-    hue: 200,
+    seed: 200,
     cover: 'ledger',
     brief:
       'A local electronics shop sells its own stock next to consignment items belonging to several partners, each on a different profit share. Bargaining on price is the norm rather than the exception, staff work from a phone as often as a desktop, and the interface had to work in both English and Kurdish.',
@@ -185,10 +188,10 @@ export const projects: Project[] = [
       'A fragrance catalogue where filtering by scent accord is the primary way in, with an admin section for the people maintaining it.',
     kind: 'Web app',
     year: '2026',
-    status: 'active',
-    statusLabel: 'In progress',
+    status: 'live',
+    statusLabel: 'In use',
     stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Supabase', 'Framer Motion'],
-    hue: 38,
+    seed: 38,
     cover: 'bloom',
     brief:
       'The same shop as the label printer, separate codebase. Customers browse perfumes by gender, brand and scent accord, so the filter panel is the actual product rather than a sidebar. Staff need to maintain the catalogue without touching the database directly.',
@@ -244,10 +247,10 @@ export const projects: Project[] = [
       'A bilingual Dutch and English site for a café and patisserie, in plain HTML, CSS and JavaScript, with ordering by WhatsApp.',
     kind: 'Website',
     year: '2026',
-    status: 'active',
-    statusLabel: 'In progress',
+    status: 'live',
+    statusLabel: 'In use',
     stack: ['HTML', 'CSS', 'JavaScript', 'JSON-LD'],
-    hue: 340,
+    seed: 340,
     cover: 'arc',
     brief:
       'A café, lunch spot and patisserie in Waalwijk in the Netherlands needed a marketing site: the concept, the lunch, drinks and pastry menus, custom cakes, a photo gallery, and opening hours. Customers order over WhatsApp, and the audience reads Dutch and English. No framework, because nothing here justified a build step or a dependency the owner would have to maintain.',
@@ -300,7 +303,7 @@ export const projects: Project[] = [
     status: 'delivered',
     statusLabel: 'Delivered',
     stack: ['HTML', 'CSS', 'JavaScript'],
-    hue: 12,
+    seed: 12,
     cover: 'stack',
     brief:
       'An architect had a portfolio as a 33-board, six-project PDF. She needed something hostable that she could send as a link, built from the visual language already in her own boards rather than a template dropped over them.',
@@ -349,58 +352,6 @@ export const projects: Project[] = [
       'A small interaction detail took two passes to get right. Hiding the system cursor entirely was tried and removed, and the preview thumbnail now floats above and to the right of the pointer instead of centring on it, so the arrow stays visible and you can still tell what is clickable. Still open before it goes live: the source PDF contained no contact details anywhere, so the site carries a clearly marked placeholder address that needs her real one.',
   },
 
-  {
-    slug: 'rukn-dubai',
-    name: 'Rukn Dubai',
-    client: 'Rukn Dubai',
-    summary:
-      'A property platform covering buy, rent and sell, with developments broken into individual units and three levels of staff access behind it.',
-    kind: 'Web platform',
-    year: '2026',
-    status: 'delivered',
-    statusLabel: 'Delivered',
-    stack: ['PHP', 'MySQL', 'JavaScript', 'CSS'],
-    hue: 168,
-    cover: 'tower',
-    brief:
-      'A real-estate platform with two different things to list. Individual properties to buy, rent or sell, and developments, which are one project containing many units that each have their own price, floor and availability. Plus the staff side: listings submitted by the public have to be reviewed before they appear, and not everyone reviewing them should be able to manage accounts.',
-    role: 'Sole developer. Public site, database schema and the administration area.',
-    metrics: [
-      { value: '2', label: 'listing models: properties and project units' },
-      { value: '3', label: 'access levels: user, editor, administrator' },
-      { value: '4', label: 'reporting views' },
-    ],
-    built: [
-      'Public browsing split by intent into buy, rent and sell, rather than one list with a mode switch.',
-      'Two listing types with their own detail pages: a standalone property, and a development with its units listed individually.',
-      'Accounts with registration and sign-in, saved favourites, and a page for managing your own listings.',
-      'Public listing submissions that enter a review queue instead of publishing straight to the site.',
-      'An administration area with a dashboard and separate management screens for properties, developments, project units, submissions, editors and users.',
-      'Four reporting views, over properties, project units, submissions and users.',
-      'Three access levels, so an editor can work through the review queue without being able to manage accounts.',
-      'Database credentials read from the environment with local defaults, so real credentials never need to be committed.',
-    ],
-    hardParts: [
-      {
-        symptom:
-          'A development and a property look like the same thing on a listing card and behave nothing alike underneath.',
-        cause:
-          'A single listing has one price and one status. A development has many units, each with its own price and availability, and the development itself needs a summary that stays true as units sell. Forcing both through one table means either a column that is meaningless for half the rows, or a summary that goes stale.',
-        fix:
-          'Modelled as two related things, with units belonging to a development, and separate detail pages and separate reporting for each. The cost is two paths to maintain; the alternative was a listing whose price was quietly wrong.',
-      },
-      {
-        symptom:
-          'Public submissions and administrator actions arriving through the same forms and the same tables.',
-        cause:
-          'Anything a visitor can submit is untrusted, and anything that reaches the live site has to have been through review. Without a queue in between, one is one form field away from the other.',
-        fix:
-          'Submissions are a distinct stage with their own management screen and their own report, and the editor role exists specifically so the person clearing that queue does not need account management rights.',
-      },
-    ],
-    reflection:
-      'The one thing I would change is where the credentials sit. They read from the environment now, with local development defaults still present in the file, and the right end state is no working default in the source at all. Worth noting as the general shape of the problem: a default that works is a default nobody replaces.',
-  },
 ];
 
 export function getProject(slug: string): Project | undefined {

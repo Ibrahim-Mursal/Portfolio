@@ -1,37 +1,81 @@
 /**
  * Everything about me that appears on the site, in one place.
  *
- * Anything marked EDIT ME is a placeholder that has to be filled in before
- * this site goes public. Nothing here is invented: if a fact was not known
- * at build time it is a placeholder rather than a guess.
+ * Sourced from the CV. Anything still marked EDIT ME is a placeholder that has
+ * to be filled in before this site goes public. Nothing here is invented: if a
+ * fact was not known at build time it is a placeholder rather than a guess.
  */
 
 export const profile = {
   name: 'Ibrahim Mursal',
-  role: 'Software developer',
+  role: 'Computer engineering student',
 
-  // Shown in the hero. Two sentences, no adjective inflation.
   tagline:
-    'I build software that goes into daily use in real shops and small businesses, then stay with it until the parts that actually break are fixed.',
+    'Computer engineering student building software that goes into daily use in real shops, then staying with it until the parts that actually break are fixed.',
 
   intro:
-    'Freelance developer working across desktop, web and point-of-sale. Most of my work ships to one client and runs every day: a thermal-label printer on a shop counter, a till handling consignment stock in two languages, a café site in Dutch and English. The interesting part of that work is almost never the feature list, so this site is organised around what was hard instead.',
+    'Third-year computer engineering student at Tishk University, working on desktop, web and point-of-sale software alongside my studies. Most of it ships to one client and runs every day: a thermal-label printer on a shop counter, a till handling consignment stock in two languages, a café site in Dutch and English. The interesting part of that work is almost never the feature list, so this site is organised around what was hard instead.',
 
-  // EDIT ME: confirm this is the address you want publicly listed. It is the
-  // one on your machine, which is not necessarily the one for clients.
   email: 'ibrahimmursal2004@gmail.com',
+  phone: '+964 750 599 8014',
+  /** City only. The street on the CV is deliberately not published. */
+  location: 'Hawler (Erbil), Iraq',
 
-  // EDIT ME: all three are placeholders. Delete any you do not want a link for
-  // and it disappears from the footer and the contact section automatically.
   links: [
-    { label: 'GitHub', href: 'https://github.com/EDIT-ME', handle: '@EDIT-ME' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/EDIT-ME', handle: 'EDIT ME' },
-    { label: 'WhatsApp', href: 'https://wa.me/EDIT-ME', handle: 'EDIT ME' },
+    // Real, derived from the phone number on the CV.
+    { label: 'WhatsApp', href: 'https://wa.me/9647505998014' },
+    // EDIT ME: both still placeholders. Deleting an entry removes it from the
+    // footer and the contact section automatically.
+    { label: 'GitHub', href: 'https://github.com/EDIT-ME' },
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/EDIT-ME' },
   ],
 
-  // EDIT ME: not recorded anywhere I could read, so left blank rather than
-  // guessed from the currency and language of your projects.
-  location: '',
+  education: {
+    school: 'Tishk University',
+    field: 'Computer Engineering',
+    period: '2023 to present',
+    standing: 'Junior, third year',
+  },
+
+  /**
+   * Only work that bears on engineering. The hotel reception and management
+   * roles on the CV are left out on purpose.
+   */
+  experience: [
+    {
+      org: 'Sha Perfume',
+      role: 'Graphic design and data entry, website content',
+      period: '2026',
+      points: [
+        'Edited and enhanced more than 500 product images.',
+        'Performed the catalogue data entry behind the web catalogue listed below.',
+        'Kept naming and formatting consistent across a large body of records.',
+      ],
+    },
+  ],
+
+  /** Spoken languages, from the CV. */
+  spokenLanguages: ['Kurdish', 'English', 'Arabic', 'Turkmani'],
+
+  /** From the CV's skills section. */
+  strengths: [
+    'Project management',
+    'Time management',
+    'Teamwork',
+    'Leadership',
+    'Effective communication',
+    'Critical thinking',
+    'Public relations',
+    'Fast learner',
+  ],
+
+  /** Non-programming computer skills, from the CV. */
+  alsoUses: [
+    'Microsoft Office',
+    'AI tools',
+    'Graphic design and image enhancement',
+    'Data entry and typing',
+  ],
 
   /**
    * How I work. Each of these is a position I actually took on a real
@@ -70,30 +114,14 @@ export const profile = {
     },
   ],
 
-  /**
-   * Toolkit. Grouped, and only things used on the projects listed on this
-   * site, so the list stays checkable against the case studies.
-   */
   toolkit: [
     {
       group: 'Languages',
-      items: ['C#', 'TypeScript', 'JavaScript', 'PHP', 'C++', 'SQL', 'HTML', 'CSS'],
-    },
-    {
-      group: 'Desktop',
-      items: ['.NET 8', 'WPF', 'ASP.NET Core', 'Win32 spooler API', 'EPL / PPLB'],
-    },
-    {
-      group: 'Web',
-      items: ['React 19', 'Astro', 'Vite', 'Tailwind', 'Express 5', 'Framer Motion'],
+      items: ['C#', 'TypeScript', 'JavaScript', 'C++', 'SQL', 'HTML', 'CSS'],
     },
     {
       group: 'Data',
-      items: ['SQLite', 'MySQL', 'Supabase', 'PostgreSQL'],
-    },
-    {
-      group: 'Practice',
-      items: ['Automated testing', 'Profiling', 'i18n and RTL', 'Accessibility', 'Static hosting'],
+      items: ['SQLite', 'MySQL', 'Supabase / Postgres'],
     },
   ],
 } as const;

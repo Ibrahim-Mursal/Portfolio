@@ -1,0 +1,46 @@
+---
+/**
+ * The geometric band from the top of the CV: a navy field with alternating
+ * orange and navy triangles. Used as the site's masthead so the portfolio and
+ * the CV read as one identity.
+ *
+ * Purely decorative, so it is hidden from assistive technology.
+ */
+interface Props {
+  /** `flip` points the triangles downward, for the footer. */
+  flip?: boolean;
+}
+
+const { flip = false } = Astro.props;
+---
+
+<div class="chevrons" class:list={[{ 'chevrons--flip': flip }]} aria-hidden="true">
+  <svg viewBox="0 0 1200 84" preserveAspectRatio="none" role="presentation">
+    <rect width="1200" height="84" fill="#0d2340" />
+    <g>
+      <path d="M 40 84 L 130 6 L 220 84 Z" fill="#efa134" />
+      <path d="M 190 84 L 268 18 L 346 84 Z" fill="#13314f" />
+      <path d="M 420 84 L 512 4 L 604 84 Z" fill="#efa134" />
+      <path d="M 578 84 L 650 22 L 722 84 Z" fill="#13314f" />
+      <path d="M 800 84 L 892 6 L 984 84 Z" fill="#efa134" />
+      <path d="M 958 84 L 1030 20 L 1102 84 Z" fill="#13314f" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .chevrons {
+    height: clamp(2.25rem, 5vw, 3.5rem);
+    background: #0d2340;
+    overflow: hidden;
+  }
+
+  .chevrons svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .chevrons--flip svg {
+    transform: scaleY(-1);
+  }
+</style>

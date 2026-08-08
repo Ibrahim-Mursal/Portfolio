@@ -1,14 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+import Chevrons from '../components/Chevrons.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
 import { profile } from '../data/profile';
 
-const liveCount = projects.filter((p) => p.status === 'live').length;
+const inUse = projects.filter((p) => p.status === 'live').length;
 ---
 
 <Base title={profile.name} description={profile.tagline}>
-  <!-- ------------------------------------------------------------- hero -->
+  <!--
+    Masthead and the two-column block below it echo the CV's layout: the
+    geometric band, then a details rail beside the profile and experience.
+  -->
+  <Chevrons />
+
   <section class="hero">
     <div class="shell">
       <p class="eyebrow">{profile.role}</p>
@@ -17,25 +23,99 @@ const liveCount = projects.filter((p) => p.status === 'live').length;
 
       <div class="hero__actions">
         <a class="btn btn--primary" href="#contact">Start a project</a>
-        <a class="btn btn--ghost" href="/work/">
-          See the work <span aria-hidden="true">&rarr;</span>
-        </a>
+        <a class="btn btn--ghost" href="/work/">See the work</a>
       </div>
+    </div>
+  </section>
 
-      <dl class="hero__facts">
-        <div>
-          <dt class="mono">Projects</dt>
-          <dd>{projects.length}</dd>
+  <!-- ------------------------------------------------- details and profile -->
+  <section class="section section--tint">
+    <div class="shell resume">
+      <aside class="rail">
+        <div class="rail__block">
+          <h2 class="label">Contact</h2>
+          <ul class="rail__list">
+            <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+            <li><a href={profile.links[0].href} rel="noopener">{profile.phone}</a></li>
+            <li>{profile.location}</li>
+          </ul>
         </div>
-        <div>
-          <dt class="mono">In daily use</dt>
-          <dd>{liveCount}</dd>
+
+        <div class="rail__block">
+          <h2 class="label">Education</h2>
+          <ul class="rail__list">
+            <li class="rail__strong">{profile.education.school}</li>
+            <li>{profile.education.field}</li>
+            <li>{profile.education.period}</li>
+            <li>{profile.education.standing}</li>
+          </ul>
         </div>
-        <div>
-          <dt class="mono">Platforms</dt>
-          <dd>Desktop, web, POS</dd>
+
+        <div class="rail__block">
+          <h2 class="label">Languages</h2>
+          <ul class="chips">
+            {profile.spokenLanguages.map((lang) => <li>{lang}</li>)}
+          </ul>
         </div>
-      </dl>
+
+        <div class="rail__block">
+          <h2 class="label">Strengths</h2>
+          <ul class="chips">
+            {profile.strengths.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <div class="rail__block">
+          <h2 class="label">Also uses</h2>
+          <ul class="chips">
+            {profile.alsoUses.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="resume__main">
+        <div class="resume__section">
+          <p class="eyebrow">Profile</p>
+          <p class="resume__intro">{profile.intro}</p>
+
+          <dl class="facts">
+            <div>
+              <dt>Projects</dt>
+              <dd>{projects.length}</dd>
+            </div>
+            <div>
+              <dt>In use now</dt>
+              <dd>{inUse}</dd>
+            </div>
+            <div>
+              <dt>Based in</dt>
+              <dd>{profile.location}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="resume__section">
+          <p class="eyebrow">Experience</p>
+          <ol class="exp">
+            {
+              profile.experience.map((job) => (
+                <li class="exp__item reveal">
+                  <div class="exp__head">
+                    <h3 class="exp__org">{job.org}</h3>
+                    <span class="mono exp__period">{job.period}</span>
+                  </div>
+                  <p class="exp__role">{job.role}</p>
+                  <ul class="exp__points">
+                    {job.points.map((point) => (
+                      <li>{point}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -43,10 +123,10 @@ const liveCount = projects.filter((p) => p.status === 'live').length;
   <section class="section" id="work">
     <div class="shell">
       <p class="eyebrow">Selected work</p>
-      <h2 class="section-title">Six projects, and what was hard about each</h2>
+      <h2 class="section-title">Five projects, and what was hard about each</h2>
       <p class="lede">
-        Every case study below leads with the problem rather than the stack. The numbers are
-        the real ones, and where something is still open I have said so.
+        Every case study leads with the problem rather than the stack. The numbers are the
+        real ones, and where something is still open I have said so.
       </p>
 
       <div class="grid">
@@ -56,24 +136,22 @@ const liveCount = projects.filter((p) => p.status === 'live').length;
   </section>
 
   <!-- --------------------------------------------------------- approach -->
-  <section class="section" id="approach">
+  <section class="section section--tint" id="approach">
     <div class="shell">
       <p class="eyebrow">How I work</p>
       <h2 class="section-title">Six positions I actually took</h2>
       <p class="lede">
-        Not values. Each of these came out of a specific decision on a specific project,
-        and each one is traceable to a case study on this site.
+        Not values. Each one came out of a specific decision on a specific project, and each
+        is traceable to a case study on this site.
       </p>
 
       <ol class="principles">
         {
           profile.principles.map((principle, i) => (
             <li class="principle reveal" style={`--reveal-delay:${Math.min(i, 5) * 60}ms`}>
-              <span class="principle__num mono">{String(i + 1).padStart(2, '0')}</span>
-              <div>
-                <h3 class="principle__title">{principle.title}</h3>
-                <p class="principle__body">{principle.body}</p>
-              </div>
+              <span class="mono principle__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="principle__title">{principle.title}</h3>
+              <p class="principle__body">{principle.body}</p>
             </li>
           ))
         }
@@ -85,18 +163,14 @@ const liveCount = projects.filter((p) => p.status === 'live').length;
   <section class="section" id="toolkit">
     <div class="shell">
       <p class="eyebrow">Toolkit</p>
-      <h2 class="section-title">What the work is built with</h2>
-      <p class="lede">
-        Limited to things used on the projects listed here, so the list can be checked
-        against the case studies.
-      </p>
+      <h2 class="section-title">What the code is written in</h2>
 
       <div class="toolkit">
         {
           profile.toolkit.map((group) => (
-            <div class="toolkit__group reveal">
-              <h3 class="toolkit__label mono">{group.group}</h3>
-              <ul>
+            <div class="toolkit__group">
+              <h3 class="label toolkit__label">{group.group}</h3>
+              <ul class="chips chips--lg">
                 {group.items.map((item) => (
                   <li>{item}</li>
                 ))}
@@ -135,71 +209,164 @@ const liveCount = projects.filter((p) => p.status === 'live').length;
 <style>
   /* --------------------------------------------------------------- hero */
   .hero {
-    position: relative;
-    padding-block: clamp(4.5rem, 13vw, 9rem) clamp(3.5rem, 9vw, 6rem);
-    overflow: hidden;
-  }
-
-  /* One soft azure field behind the hero. The only decorative gradient. */
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: -40% 20% auto -10%;
-    height: 42rem;
-    background: radial-gradient(
-      55% 50% at 30% 40%,
-      var(--azure-glow) 0%,
-      transparent 72%
-    );
-    pointer-events: none;
-  }
-
-  .hero > .shell {
-    position: relative;
+    padding-block: clamp(2.75rem, 7vw, 4.5rem) clamp(2.5rem, 6vw, 4rem);
   }
 
   .hero__title {
-    font-size: clamp(2.75rem, 9vw, 5.25rem);
-    margin-top: 1.25rem;
+    font-size: clamp(2.5rem, 8.5vw, 4.75rem);
+    margin-top: 0.9rem;
     letter-spacing: -0.035em;
+    text-transform: uppercase;
   }
 
   .hero__tagline {
-    margin-top: 1.5rem;
-    max-width: 40ch;
-    font-size: clamp(1.125rem, 2.6vw, 1.5rem);
-    line-height: 1.45;
-    color: var(--text-200);
+    margin-top: 1.25rem;
+    max-width: 46ch;
+    font-size: clamp(1.0625rem, 2.2vw, 1.375rem);
+    line-height: 1.5;
+    color: var(--text-600);
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2.25rem;
+    gap: 0.7rem;
+    margin-top: 2rem;
   }
 
-  .hero__facts {
+  /* ------------------------------------------------- details and profile */
+  .resume {
+    display: grid;
+    gap: 2.5rem 3.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .resume {
+      grid-template-columns: 15rem minmax(0, 1fr);
+    }
+  }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .rail__block .label {
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--orange-500);
+  }
+
+  .rail__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.875rem;
+    color: var(--text-600);
+    /* Long email on a narrow rail. */
+    overflow-wrap: anywhere;
+  }
+
+  .rail__strong {
+    font-weight: 600;
+    color: var(--text-900);
+  }
+
+  .resume__main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+    min-width: 0;
+  }
+
+  .resume__intro {
+    margin-top: 1rem;
+    font-size: 1.0625rem;
+    max-width: var(--measure);
+  }
+
+  .facts {
     display: flex;
     flex-wrap: wrap;
-    gap: 2.5rem;
-    margin-top: clamp(3rem, 7vw, 4.5rem);
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
+    gap: 1.5rem 2.5rem;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-strong);
   }
 
-  .hero__facts dt {
+  .facts dt {
     font-size: 0.6875rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-500);
   }
 
-  .hero__facts dd {
-    margin-top: 0.35rem;
+  .facts dd {
+    margin-top: 0.3rem;
     font-family: var(--font-display);
-    font-size: 1.375rem;
-    color: var(--text-100);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--text-900);
+  }
+
+  /* --------------------------------------------------------- experience */
+  .exp {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.25rem;
+  }
+
+  .exp__item {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border-strong);
+  }
+
+  .exp__item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0.55rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--orange-500);
+  }
+
+  .exp__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+  }
+
+  .exp__org {
+    font-size: 1.125rem;
+  }
+
+  .exp__period {
+    color: var(--text-500);
+  }
+
+  .exp__role {
+    margin-top: 0.15rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--navy-700);
+  }
+
+  .exp__points {
+    margin-top: 0.7rem;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9375rem;
+    color: var(--text-600);
   }
 
   /* --------------------------------------------------------------- work */
@@ -207,81 +374,118 @@ const liveCount = projects.filter((p) => p.status === 'live').length;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
     gap: 1.25rem;
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    margin-top: clamp(2.25rem, 5vw, 3rem);
   }
 
   /* ---------------------------------------------------------- approach */
   .principles {
     list-style: none;
     padding: 0;
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    margin-top: clamp(2.25rem, 5vw, 3rem);
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
-    gap: 2rem 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+    gap: 1.25rem;
   }
 
   .principle {
-    display: flex;
-    gap: 1.1rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--orange-500);
+    border-radius: var(--radius);
+    padding: 1.35rem 1.4rem 1.5rem;
   }
 
+  /*
+   * Navy, not orange. Orange on white tops out near 2.8:1 at this size, which
+   * fails. The card's orange marker is the top border, which is not text.
+   */
   .principle__num {
-    flex: none;
-    color: var(--azure-500);
+    color: var(--navy-700);
     font-size: 0.75rem;
-    padding-top: 0.3rem;
+    font-weight: 600;
   }
 
   .principle__title {
+    margin-top: 0.5rem;
     font-size: 1.0625rem;
   }
 
   .principle__body {
-    margin-top: 0.55rem;
+    margin-top: 0.5rem;
     font-size: 0.9375rem;
-    color: var(--text-300);
+    color: var(--text-600);
   }
 
   /* ----------------------------------------------------------- toolkit */
   .toolkit {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
-    gap: 1.75rem 2rem;
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 2rem 3rem;
+    margin-top: clamp(2rem, 4vw, 2.75rem);
   }
 
   .toolkit__label {
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--azure-400);
-    padding-bottom: 0.7rem;
-    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--orange-500);
   }
 
-  .toolkit ul {
+  /* ------------------------------------------------------------- chips -->*/
+  .chips {
     list-style: none;
     padding: 0;
     margin-top: 0.85rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 
-  .toolkit li {
-    font-size: 0.9375rem;
-    color: var(--text-300);
+  .chips li {
+    font-size: 0.8125rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--text-600);
+  }
+
+  .chips--lg li {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--navy-800);
   }
 
   /* ----------------------------------------------------------- contact */
   .contact {
-    background: var(--ink-850);
+    background: var(--navy-900);
+  }
+
+  .contact :global(.eyebrow) {
+    color: var(--orange-400);
+  }
+
+  .contact .section-title {
+    color: #fff;
+  }
+
+  .contact .lede {
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .contact__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2.25rem;
+    gap: 0.7rem;
+    margin-top: 2rem;
+  }
+
+  .contact :global(.btn--ghost) {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.28);
+    color: #fff;
+  }
+
+  .contact :global(.btn--ghost:hover) {
+    border-color: var(--orange-400);
+    color: #fff;
   }
 </style>

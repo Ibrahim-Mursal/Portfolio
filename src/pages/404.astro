@@ -9,7 +9,7 @@ import { projects } from '../data/projects';
       <p class="eyebrow">404</p>
       <h1 class="notfound__title">That page does not exist</h1>
       <p class="lede">
-        Nothing here at this address. The six case studies are all one click away.
+        Nothing here at this address. The case studies are all one click away.
       </p>
 
       <ul class="notfound__list">
@@ -23,7 +23,7 @@ import { projects } from '../data/projects';
         }
       </ul>
 
-      <a class="btn btn--ghost" href="/">
+      <a class="btn btn--solid" href="/">
         <span aria-hidden="true">&larr;</span> Back home
       </a>
     </div>
@@ -32,18 +32,18 @@ import { projects } from '../data/projects';
 
 <style>
   .notfound {
-    padding-block: clamp(4rem, 12vw, 8rem);
+    padding-block: clamp(3rem, 9vw, 6rem);
   }
 
   .notfound__title {
-    font-size: clamp(2rem, 6vw, 3.25rem);
-    margin-top: 1.1rem;
+    font-size: clamp(1.85rem, 5.5vw, 3rem);
+    margin-top: 0.9rem;
   }
 
   .notfound__list {
     list-style: none;
     padding: 0;
-    margin-block: 2.5rem;
+    margin-block: 2.25rem;
     max-width: 34rem;
   }
 
@@ -52,13 +52,14 @@ import { projects } from '../data/projects';
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    padding-block: 0.85rem;
+    padding-block: 0.8rem;
     border-bottom: 1px solid var(--border);
   }
 
   .notfound__list a {
     text-decoration: none;
     font-family: var(--font-display);
+    font-weight: 600;
     font-size: 1.0625rem;
   }
 

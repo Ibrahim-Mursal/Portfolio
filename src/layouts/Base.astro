@@ -37,7 +37,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <meta name="theme-color" content="#0d2340" />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Browsers that ignore the SVG probe /favicon.ico regardless. -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!--
       Set `.js` before first paint. Everything that the reveal animation hides

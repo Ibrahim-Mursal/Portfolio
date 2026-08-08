@@ -1,9 +1,9 @@
 # Ibrahim Mursal — Portfolio
 
-Astro 5, static output, no runtime dependencies. Nine pages: home, a work index,
-six generated case studies, and a 404.
+Astro 5, static output, no runtime dependencies. Eight pages: home, a work index,
+five generated case studies, and a 404.
 
-Content is data-driven. Adding a seventh project means adding one object to
+Content is data-driven. Adding a sixth project means adding one object to
 `src/data/projects.ts`; the home grid, the work index and the case-study page all
 generate from it. Nothing about a project lives in a page file.
 
@@ -34,17 +34,18 @@ they are listed here.
 - [ ] **Domain.** `site` in `astro.config.mjs` is set to a placeholder host that
       is written into every canonical link and Open Graph URL. Change it, and
       change the matching line in `public/robots.txt`.
-- [ ] **GitHub, LinkedIn and WhatsApp links.** `profile.links` in
-      `src/data/profile.ts`. All three point at `EDIT-ME`. Deleting an entry
-      removes it from both the footer and the contact section automatically.
-- [ ] **Public email.** `profile.email` is the address configured on this
-      machine, which is not necessarily the one to hand to clients.
-- [ ] **Location.** `profile.location` is deliberately empty rather than guessed.
-      Fill it in or leave it out.
+- [ ] **GitHub and LinkedIn.** `profile.links` in `src/data/profile.ts`. Both
+      point at `EDIT-ME`. Deleting an entry removes it from both the footer and
+      the contact section automatically. WhatsApp is real, derived from the phone
+      number on the CV.
 - [ ] **A social preview image.** There is no `og:image`, so shared links show no
       thumbnail. Add a 1200x630 image to `public/`, then a matching `og:image`
       tag in `src/layouts/Base.astro`. Worth doing: this is the same gap
       currently open on the Cafe Faim site.
+
+Contact details, education, languages and skills all come from the CV and are
+real. The street address on the CV is deliberately not published; the site shows
+the city only.
 
 ## Content rule
 
@@ -55,21 +56,36 @@ still unresolved, the case study says so rather than rounding it into a win.
 Client internals are deliberately left out even where they are known. No network
 addresses, no credentials, no partner balances.
 
+Work history is limited to what bears on engineering. The hotel reception and
+management roles on the CV are left out on purpose: this is a computer
+engineering portfolio.
+
 ## Design
 
-One accent carries every piece of emphasis: azure `#4C7DFF`. One warm colour,
-amber `#FFAB33`, is reserved for the primary call to action and the
-"live in production" badge, and appears nowhere else. If a third colour starts
-showing up, something has gone wrong.
+The palette is taken from the CV so the two documents read as one identity. Deep
+navy carries structure and every piece of emphasis; the CV's orange is reserved
+for attention, and the geometric chevron band from the top of the CV is the
+site's masthead.
+
+**Orange is never text.** At `#EFA134` it sits around 1.9:1 on white and fails
+every contrast threshold, so it appears only as fills, borders, rules and
+geometry, and any text sitting on top of it is navy. Links, labels and small
+capitalised headings are navy, which clears 7:1. A contrast pass over every text
+and background pair on the built pages currently reports zero failures against
+WCAG AA, and one of the two mistakes it caught was orange used for a small
+number, so the rule is worth keeping.
 
 Type is Sora for display, Inter for body, JetBrains Mono for metadata, all
 self-hosted through `@fontsource` so no request leaves the origin.
 
 Project covers are generated SVG (`src/components/Cover.astro`), one motif per
-project, seeded deterministically from the project's hue so a cover never
-changes between builds. They are not screenshots and not device mockups: a
-screenshot of an admin table says nothing at card size, and a mockup of
-non-public work would be fiction.
+project, seeded deterministically so a cover never changes between builds. They
+are not screenshots and not device mockups: a screenshot of an admin table says
+nothing at card size, and a mockup of non-public work would be fiction. All five
+use the same navy and orange, because five accent colours across five cards is
+how a palette stops meaning anything.
+
+Project cards carry no separate call to action. The whole card is the link.
 
 ## The scroll reveal, and why it is built that way
 
