@@ -1,20 +1,17 @@
 ---
-import { profile } from '../data/profile';
+import { site } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-foot">
   <div class="shell site-foot__inner">
-    <div>
-      <p class="site-foot__name">{profile.name}</p>
-      <p class="site-foot__role">{profile.role}, {profile.location}</p>
-    </div>
+    <p class="site-foot__name">{site.name}</p>
 
     <ul class="site-foot__links">
-      <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
       {
-        profile.links.map((link) => (
+        site.links.map((link) => (
           <li>
             <a href={link.href} rel="noopener">
               {link.label}
@@ -31,15 +28,15 @@ const year = new Date().getFullYear();
 <style>
   .site-foot {
     border-top: 1px solid var(--border);
-    background: var(--ink-950);
-    padding-block: 2.25rem 2.75rem;
+    background: var(--bg-deep);
+    padding-block: 1.85rem 2.25rem;
   }
 
   .site-foot__inner {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.25rem 2.5rem;
-    align-items: flex-start;
+    gap: 0.75rem 2rem;
+    align-items: center;
     justify-content: space-between;
   }
 
@@ -47,14 +44,7 @@ const year = new Date().getFullYear();
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.9375rem;
-    text-transform: uppercase;
     color: var(--text-100);
-  }
-
-  .site-foot__role {
-    margin-top: 0.2rem;
-    font-size: 0.8125rem;
-    color: var(--text-500);
   }
 
   .site-foot__links {
@@ -72,10 +62,10 @@ const year = new Date().getFullYear();
   }
 
   .site-foot__links a:hover {
-    color: var(--lime-400);
+    color: var(--cyan-400);
   }
 
   .site-foot__meta {
-    color: var(--text-500);
+    color: var(--text-400);
   }
 </style>

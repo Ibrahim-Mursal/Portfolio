@@ -1,29 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import { projects } from '../data/projects';
 ---
 
 <Base title="Page not found" description="That page does not exist." noindex>
   <section class="notfound">
     <div class="shell">
       <p class="eyebrow">404</p>
-      <h1 class="notfound__title">Nothing here</h1>
-      <p class="lede">
-        That address does not exist. The case studies are all one click away.
-      </p>
+      <h1 class="notfound__title">Nothing here.</h1>
+      <p class="lede">That address does not exist.</p>
 
-      <ul class="notfound__list">
-        {
-          projects.map((project) => (
-            <li>
-              <a href={`/work/${project.slug}/`}>{project.name}</a>
-              <span class="mono">{project.client}</span>
-            </li>
-          ))
-        }
-      </ul>
-
-      <a class="btn btn--primary" href="/">
+      <a class="btn btn--primary notfound__btn" href="/">
         <span aria-hidden="true">&larr;</span> Back home
       </a>
     </div>
@@ -36,40 +22,11 @@ import { projects } from '../data/projects';
   }
 
   .notfound__title {
-    font-size: clamp(2.5rem, 10vw, 5.5rem);
-    margin-top: 1rem;
-    text-transform: uppercase;
-    letter-spacing: -0.045em;
+    margin-top: 0.9rem;
+    font-size: clamp(2.25rem, 8vw, 4rem);
   }
 
-  .notfound__list {
-    list-style: none;
-    padding: 0;
-    margin-block: 2.5rem;
-    max-width: 34rem;
-  }
-
-  .notfound__list li {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-block: 0.85rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .notfound__list a {
-    text-decoration: none;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.0625rem;
-  }
-
-  .notfound__list span {
-    color: var(--text-500);
-    font-size: 0.6875rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-align: right;
+  .notfound__btn {
+    margin-top: 2rem;
   }
 </style>

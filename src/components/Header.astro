@@ -1,20 +1,17 @@
 ---
-import { profile } from '../data/profile';
-
-const path = Astro.url.pathname;
-const isWork = path.startsWith('/work');
+import { site } from '../data/site';
 ---
 
 <header class="site-head">
   <div class="shell site-head__inner">
     <a class="wordmark" href="/">
       <span class="wordmark__dot" aria-hidden="true"></span>
-      <span class="wordmark__name">{profile.name}</span>
+      <span>{site.name}</span>
     </a>
 
     <nav aria-label="Primary">
-      <a href="/work/" aria-current={isWork ? 'page' : undefined}>Work</a>
-      <a href="/#approach">Approach</a>
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
       <a class="nav__cta" href="/#contact">Contact</a>
     </nav>
   </div>
@@ -25,7 +22,7 @@ const isWork = path.startsWith('/work');
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(10, 11, 13, 0.86);
+    background: rgba(8, 11, 15, 0.85);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
@@ -35,7 +32,7 @@ const isWork = path.startsWith('/work');
     align-items: center;
     justify-content: space-between;
     gap: 1.25rem;
-    min-height: 4rem;
+    min-height: 3.75rem;
   }
 
   .wordmark {
@@ -44,27 +41,23 @@ const isWork = path.startsWith('/work');
     gap: 0.55rem;
     text-decoration: none;
     color: var(--text-100);
-  }
-
-  .wordmark__dot {
-    width: 9px;
-    height: 9px;
-    background: var(--lime-400);
-    flex: none;
-  }
-
-  .wordmark__name {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.9375rem;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
+  }
+
+  .wordmark__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan-400);
+    flex: none;
   }
 
   nav {
     display: flex;
     align-items: center;
-    gap: clamp(0.9rem, 3vw, 1.9rem);
+    gap: clamp(0.9rem, 3vw, 1.75rem);
   }
 
   nav a {
@@ -72,17 +65,10 @@ const isWork = path.startsWith('/work');
     font-weight: 500;
     color: var(--text-300);
     text-decoration: none;
-    padding-block: 0.3rem;
-    border-bottom: 2px solid transparent;
   }
 
   nav a:hover {
     color: var(--text-100);
-  }
-
-  nav a[aria-current='page'] {
-    color: var(--text-100);
-    border-bottom-color: var(--lime-400);
   }
 
   .nav__cta {
@@ -93,8 +79,8 @@ const isWork = path.startsWith('/work');
   }
 
   .nav__cta:hover {
-    border-color: var(--lime-400);
-    color: var(--lime-400);
+    border-color: var(--cyan-400);
+    color: var(--cyan-400);
   }
 
   @media (max-width: 26rem) {

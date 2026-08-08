@@ -1,164 +1,78 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects } from '../data/projects';
-import { profile } from '../data/profile';
-
-const inUse = projects.filter((p) => p.status === 'live').length;
-
-/** The strip under the hero. Loud, and every item is checkable. */
-const strip = profile.toolkit.flatMap((group) => group.items);
+import { site } from '../data/site';
 ---
 
-<Base title={profile.name} description={profile.tagline}>
+<Base title={site.name} description={`${site.pitch} ${site.intro}`}>
   <!-- ------------------------------------------------------------- hero -->
   <section class="hero">
     <div class="shell hero__inner">
-      <p class="eyebrow">{profile.role}</p>
+      <p class="eyebrow">{site.name}</p>
 
       <h1 class="hero__title">
-        <span>Ibrahim</span>
-        <span class="hero__last">Mursal</span>
+        We make your job<br /><span class="hi">easier and faster</span>.
       </h1>
 
-      <p class="hero__tagline">
-        I build software that goes into <span class="mark">daily use</span> in real shops,
-        then stay with it until the parts that actually break are fixed.
+      <p class="hero__sub">
+        {site.role}. I build the software that takes the slow part of your day and removes
+        it.
       </p>
 
       <div class="hero__actions">
-        <a class="btn btn--primary" href="#contact">Start a project</a>
-        <a class="btn btn--ghost" href="/work/">See the work</a>
+        <a class="btn btn--primary" href="#contact">Get in touch</a>
+        <a class="btn btn--ghost" href="#work">See the work</a>
       </div>
     </div>
 
-    <ul class="strip" aria-label="Languages and data tools">
-      {strip.map((item) => <li class="mono">{item}</li>)}
-    </ul>
+    <!-- Companies worked with. Names only. -->
+    <div class="clients">
+      <div class="shell clients__inner">
+        <p class="mono clients__label">Worked with</p>
+        <ul class="clients__list">
+          {site.clients.map((client) => <li>{client}</li>)}
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- ------------------------------------------------------------- work -->
   <section class="section" id="work">
     <div class="shell">
-      <p class="eyebrow">Selected work</p>
-      <h2 class="section-title">
-        Five projects.<br />Written around <span class="mark">what was hard</span>.
-      </h2>
-      <p class="lede">
-        Every case study leads with the problem rather than the stack. The numbers are the
-        real ones, and where something is still open I have said so.
-      </p>
+      <p class="eyebrow">Work</p>
+      <h2 class="section-title">Four things, all in use.</h2>
 
       <div class="grid">
-        {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
+        {site.projects.map((project, i) => <ProjectCard project={project} index={i} />)}
       </div>
     </div>
   </section>
 
-  <!-- ------------------------------------------------------ counts band -->
-  <section class="band">
-    <div class="shell band__inner">
-      <div class="stat">
-        <p class="stat__value">{projects.length}</p>
-        <p class="stat__label">Case studies</p>
-      </div>
-      <div class="stat">
-        <p class="stat__value">{inUse}</p>
-        <p class="stat__label">In use right now</p>
-      </div>
-      <div class="stat">
-        <p class="stat__value">{profile.spokenLanguages.length}</p>
-        <p class="stat__label">Languages spoken</p>
-      </div>
-      <div class="stat">
-        <p class="stat__value">3<span class="stat__suffix">rd</span></p>
-        <p class="stat__label">Year of the degree</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---------------------------------------------------------- profile -->
-  <section class="section" id="about">
+  <!-- ------------------------------------------------------------ about -->
+  <section class="section section--edge" id="about">
     <div class="shell about">
-      <div class="about__main">
-        <p class="eyebrow">Profile</p>
-        <p class="about__intro">{profile.intro}</p>
+      <div>
+        <p class="eyebrow">About</p>
+        <p class="about__intro">{site.intro}</p>
 
-        <h3 class="about__sub">Experience</h3>
-        <ol class="exp">
-          {
-            profile.experience.map((job) => (
-              <li class="exp__item reveal">
-                <div class="exp__head">
-                  <h4 class="exp__org">{job.org}</h4>
-                  <span class="mono exp__period">{job.period}</span>
-                </div>
-                <p class="exp__role">{job.role}</p>
-                <ul class="exp__points">
-                  {job.points.map((point) => (
-                    <li>{point}</li>
-                  ))}
-                </ul>
-              </li>
-            ))
-          }
-        </ol>
+        <ul class="chips about__skills">
+          {site.skills.map((skill) => <li>{skill}</li>)}
+        </ul>
       </div>
 
-      <aside class="about__aside">
+      <aside class="about__side">
         <div class="panel">
-          <h3 class="label">Studying</h3>
-          <p class="panel__lead">{profile.education.school}</p>
-          <p class="panel__sub">{profile.education.field}</p>
-          <p class="panel__sub">{profile.education.period}</p>
-          <p class="panel__sub">{profile.education.standing}</p>
+          <p class="mono panel__label">Studying</p>
+          <p class="panel__lead">{site.education.school}</p>
+          <p class="panel__sub">{site.education.field}</p>
+          <p class="panel__sub">{site.education.standing}, {site.education.period}</p>
         </div>
 
         <div class="panel">
-          <h3 class="label">Languages</h3>
-          <ul class="chips">
-            {profile.spokenLanguages.map((lang) => <li>{lang}</li>)}
-          </ul>
-        </div>
-
-        <div class="panel">
-          <h3 class="label">Also works with</h3>
-          <ul class="chips">
-            {profile.alsoUses.map((item) => <li>{item}</li>)}
-          </ul>
-        </div>
-
-        <div class="panel">
-          <h3 class="label">Strengths</h3>
-          <ul class="chips">
-            {profile.strengths.map((item) => <li>{item}</li>)}
-          </ul>
+          <p class="mono panel__label">Languages</p>
+          <p class="panel__lead">{site.languages.join(', ')}</p>
         </div>
       </aside>
-    </div>
-  </section>
-
-  <!-- --------------------------------------------------------- approach -->
-  <section class="section section--edge" id="approach">
-    <div class="shell">
-      <p class="eyebrow">How I work</p>
-      <h2 class="section-title">Six positions I actually took</h2>
-      <p class="lede">
-        Not values. Each one came out of a specific decision on a specific project, and each
-        is traceable to a case study on this site.
-      </p>
-
-      <ol class="principles">
-        {
-          profile.principles.map((principle, i) => (
-            <li class="principle reveal" style={`--reveal-delay:${Math.min(i, 5) * 60}ms`}>
-              <span class="mono principle__num">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="principle__title">{principle.title}</h3>
-              <p class="principle__body">{principle.body}</p>
-            </li>
-          ))
-        }
-      </ol>
     </div>
   </section>
 
@@ -166,18 +80,12 @@ const strip = profile.toolkit.flatMap((group) => group.items);
   <section class="section contact" id="contact">
     <div class="shell">
       <p class="eyebrow">Contact</p>
-      <h2 class="contact__title">
-        Have something<br />that needs <span class="mark">building</span>?
-      </h2>
-      <p class="lede">
-        Tell me what it has to do and where it has to run. If it is not something I should
-        take on I will say so rather than quote for it.
-      </p>
+      <h2 class="contact__title">Tell me what is slowing you down.</h2>
 
       <div class="contact__actions">
-        <a class="btn btn--primary" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <a class="btn btn--primary" href={`mailto:${site.email}`}>{site.email}</a>
         {
-          profile.links.map((link) => (
+          site.links.map((link) => (
             <a class="btn btn--ghost" href={link.href} rel="noopener">
               {link.label}
             </a>
@@ -185,7 +93,7 @@ const strip = profile.toolkit.flatMap((group) => group.items);
         }
       </div>
 
-      <p class="contact__meta mono">{profile.phone} &middot; {profile.location}</p>
+      <p class="mono contact__meta">{site.phone} &middot; {site.location}</p>
     </div>
   </section>
 </Base>
@@ -194,61 +102,41 @@ const strip = profile.toolkit.flatMap((group) => group.items);
   /* --------------------------------------------------------------- hero */
   .hero {
     position: relative;
-    padding-top: clamp(3.5rem, 10vw, 7rem);
     overflow: hidden;
   }
 
-  /* One lime field behind the hero. The only decorative gradient on the site. */
+  /*
+   * Two glows behind the hero, cyan over violet. The only place violet appears,
+   * and it is purely light: nothing depends on seeing it.
+   */
   .hero::before {
     content: '';
     position: absolute;
-    inset: -35% 25% auto -15%;
-    height: 40rem;
-    background: radial-gradient(50% 50% at 30% 45%, var(--lime-glow) 0%, transparent 70%);
+    inset: -12rem -20% auto -20%;
+    height: 42rem;
+    background:
+      radial-gradient(38% 44% at 28% 42%, var(--cyan-glow) 0%, transparent 72%),
+      radial-gradient(34% 40% at 68% 30%, var(--violet-glow) 0%, transparent 72%);
     pointer-events: none;
   }
 
   .hero__inner {
     position: relative;
-    padding-bottom: clamp(3rem, 7vw, 5rem);
+    padding-block: clamp(3.5rem, 10vw, 6.5rem) clamp(2.75rem, 7vw, 4.5rem);
   }
 
   .hero__title {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1.1rem;
-    font-size: clamp(3.25rem, 15vw, 9rem);
-    font-weight: 700;
-    line-height: 0.92;
-    letter-spacing: -0.045em;
-    text-transform: uppercase;
+    margin-top: 1.25rem;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
   }
 
-  /*
-   * The surname is outlined rather than filled, so the eye lands on the first.
-   *
-   * The fallback is not optional: `-webkit-text-stroke` is non-standard, and
-   * setting `color: transparent` unconditionally means an engine without it
-   * renders the surname invisible. Solid lime is the default; the outline is
-   * applied only where the stroke is actually supported.
-   */
-  .hero__last {
-    color: var(--lime-400);
-  }
-
-  @supports (-webkit-text-stroke: 1px currentColor) {
-    .hero__last {
-      color: transparent;
-      -webkit-text-stroke: 1.5px var(--lime-400);
-    }
-  }
-
-  .hero__tagline {
-    margin-top: 1.75rem;
-    max-width: 34ch;
-    font-size: clamp(1.125rem, 2.4vw, 1.5rem);
-    line-height: 1.45;
-    color: var(--text-200);
+  .hero__sub {
+    margin-top: 1.5rem;
+    max-width: 44ch;
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+    color: var(--text-300);
   }
 
   .hero__actions {
@@ -258,141 +146,74 @@ const strip = profile.toolkit.flatMap((group) => group.items);
     margin-top: 2.25rem;
   }
 
-  /* Lime strip. Loudest element on the page, and it is only ever real tools. */
-  .strip {
+  /* ------------------------------------------------------------ clients */
+  .clients {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 1.5rem;
-    justify-content: center;
-    list-style: none;
-    padding: 0.9rem var(--gutter);
-    background: var(--lime-400);
+    border-block: 1px solid var(--border);
+    background: var(--surface);
   }
 
-  .strip li {
-    color: var(--ink-950);
-    font-weight: 600;
-    letter-spacing: 0.04em;
+  .clients__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 2rem;
+    padding-block: 1.1rem;
+  }
+
+  .clients__label {
+    color: var(--text-400);
     text-transform: uppercase;
-    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    font-size: 0.6875rem;
+  }
+
+  .clients__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .clients__list li {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--text-100);
   }
 
   /* --------------------------------------------------------------- work */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
     gap: 1.25rem;
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    margin-top: clamp(2rem, 5vw, 2.75rem);
   }
 
-  /* --------------------------------------------------------- counts band */
-  .band {
-    border-block: 1px solid var(--border);
-    background: var(--ink-850);
-    padding-block: clamp(2.25rem, 5vw, 3.25rem);
-  }
-
-  .band__inner {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
-    gap: 2rem;
-  }
-
-  .stat__value {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(2.75rem, 7vw, 4.25rem);
-    line-height: 1;
-    letter-spacing: -0.045em;
-    color: var(--lime-400);
-  }
-
-  .stat__suffix {
-    font-size: 0.4em;
-    vertical-align: super;
-    letter-spacing: 0;
-  }
-
-  .stat__label {
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
-    color: var(--text-400);
-  }
-
-  /* ------------------------------------------------------------ profile */
+  /* -------------------------------------------------------------- about */
   .about {
     display: grid;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
-  @media (min-width: 62rem) {
+  @media (min-width: 58rem) {
     .about {
-      grid-template-columns: minmax(0, 1fr) 19rem;
-      gap: 4rem;
+      grid-template-columns: minmax(0, 1fr) 17rem;
+      gap: 3.5rem;
     }
   }
 
   .about__intro {
-    margin-top: 1.1rem;
-    font-size: 1.0625rem;
+    margin-top: 1rem;
     max-width: var(--measure);
-    color: var(--text-300);
   }
 
-  .about__sub {
-    margin-top: 2.75rem;
-    font-size: 1.25rem;
+  .about__skills {
+    margin-top: 1.5rem;
   }
 
-  .exp {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.25rem;
-  }
-
-  .exp__item {
-    padding-left: 1.5rem;
-    border-left: 2px solid var(--lime-500);
-  }
-
-  .exp__head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.4rem 1rem;
-  }
-
-  .exp__org {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.125rem;
-    color: var(--text-100);
-  }
-
-  .exp__period {
-    color: var(--text-500);
-  }
-
-  .exp__role {
-    margin-top: 0.15rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--lime-400);
-  }
-
-  .exp__points {
-    margin-top: 0.75rem;
-    padding-left: 1.1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    font-size: 0.9375rem;
-    color: var(--text-300);
-  }
-
-  .about__aside {
+  .about__side {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -401,17 +222,21 @@ const strip = profile.toolkit.flatMap((group) => group.items);
 
   .panel {
     border: 1px solid var(--border);
+    border-left: 2px solid var(--cyan-500);
     border-radius: var(--radius);
-    background: var(--ink-850);
-    padding: 1.15rem 1.25rem 1.3rem;
+    background: var(--surface);
+    padding: 1.1rem 1.25rem 1.25rem;
   }
 
-  .panel .chips {
-    margin-top: 0.75rem;
+  .panel__label {
+    color: var(--cyan-400);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.6875rem;
   }
 
   .panel__lead {
-    margin-top: 0.7rem;
+    margin-top: 0.55rem;
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1.0625rem;
@@ -423,70 +248,26 @@ const strip = profile.toolkit.flatMap((group) => group.items);
     color: var(--text-400);
   }
 
-  /* ---------------------------------------------------------- approach */
-  .principles {
-    list-style: none;
-    padding: 0;
-    margin-top: clamp(2.5rem, 6vw, 3.5rem);
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
-    gap: 1.25rem;
-  }
-
-  .principle {
-    background: var(--ink-850);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.4rem 1.45rem 1.55rem;
-    transition: border-color 0.22s var(--ease);
-  }
-
-  .principle:hover {
-    border-color: rgba(205, 255, 77, 0.35);
-  }
-
-  .principle__num {
-    color: var(--lime-400);
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .principle__title {
-    margin-top: 0.5rem;
-    font-size: 1.0625rem;
-  }
-
-  .principle__body {
-    margin-top: 0.55rem;
-    font-size: 0.9375rem;
-    color: var(--text-300);
-  }
-
-  /* ----------------------------------------------------------- contact */
+  /* ------------------------------------------------------------ contact */
   .contact {
     border-top: 1px solid var(--border);
-    background: var(--ink-950);
+    background: var(--bg-deep);
   }
 
   .contact__title {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(2.25rem, 7vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: -0.04em;
-    margin-top: 1rem;
-    color: var(--text-100);
+    margin-top: 0.9rem;
+    font-size: clamp(1.85rem, 5.5vw, 3rem);
   }
 
   .contact__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.7rem;
-    margin-top: 2.25rem;
+    margin-top: 2rem;
   }
 
   .contact__meta {
-    margin-top: 1.5rem;
-    color: var(--text-500);
+    margin-top: 1.35rem;
+    color: var(--text-400);
   }
 </style>
