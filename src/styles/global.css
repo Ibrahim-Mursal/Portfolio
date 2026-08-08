@@ -1,52 +1,59 @@
 /*
  * Design system.
  *
- * Palette taken from the CV so the two read as one identity: deep navy for
- * structure and every piece of emphasis, CV orange for attention only.
+ * Near-black ground, one accent: electric lime. The accent was chosen to be
+ * loud, and it has a practical advantage over a warm accent on light ground.
+ * Lime on #0A0B0D clears roughly 15:1, so it can carry text, borders, fills and
+ * large numerals with no contrast exception anywhere. The previous orange could
+ * not be used as text at all.
  *
- * Orange is never text. At #EFA134 it sits around 1.9:1 on white, which fails
- * every contrast threshold. It appears as fills, rules and geometry, and any
- * text sitting on it is navy. Links and labels are navy, which clears 7:1.
+ * One accent carries every piece of emphasis. There is no second colour.
  */
 
 :root {
-  --navy-900: #0d2340;
-  --navy-800: #13314f;
-  --navy-700: #1b4470;
-  --navy-600: #245a90;
-  --navy-500: #3d76ad;
+  --ink-950: #08090b;
+  --ink-900: #0a0b0d;
+  --ink-850: #101215;
+  --ink-800: #16181c;
+  --ink-750: #1d2025;
+  --ink-700: #262a30;
 
-  --orange-400: #f5b862;
-  --orange-500: #efa134;
-  --orange-600: #d9871a;
+  --text-100: #f6f7f8;
+  --text-200: #dcdfe3;
+  --text-300: #a7adb6;
+  /*
+   * The two muted tones are the floor for small text, not decoration. On the
+   * darkest surface a neutral grey needs to sit around #8a8a8a to clear 4.5:1
+   * at 11px, so these are set just above that and verified against every
+   * surface they land on. An earlier, darker pair failed on four elements.
+   */
+  --text-400: #99a1ac;
+  --text-500: #8c94a0;
 
-  --paper: #ffffff;
-  --paper-50: #f8f9fb;
-  --paper-100: #f1f4f8;
-  --paper-200: #e5eaf1;
+  /* The accent. */
+  --lime-300: #ddff8a;
+  --lime-400: #cdff4d;
+  --lime-500: #b8f21f;
+  --lime-600: #93c414;
+  --lime-glow: rgba(205, 255, 77, 0.13);
 
-  --text-900: #0d2340;
-  --text-700: #33475f;
-  --text-600: #4a5d75;
-  --text-500: #5a6b82;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
 
-  --border: #e2e8f0;
-  --border-strong: #cbd5e2;
-
-  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
 
   --measure: 68ch;
-  --shell: 1180px;
+  --shell: 1220px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
 
-  --radius: 12px;
-  --radius-sm: 7px;
+  --radius: 14px;
+  --radius-sm: 8px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 *,
@@ -71,8 +78,8 @@ html {
 }
 
 body {
-  background: var(--paper);
-  color: var(--text-700);
+  background: var(--ink-900);
+  color: var(--text-200);
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.65;
@@ -89,19 +96,19 @@ svg {
 }
 
 a {
-  color: var(--navy-700);
-  text-decoration-color: rgba(27, 68, 112, 0.32);
+  color: var(--lime-400);
+  text-decoration-color: rgba(205, 255, 77, 0.35);
   text-underline-offset: 0.2em;
   transition: color 0.18s var(--ease), text-decoration-color 0.18s var(--ease);
 }
 
 a:hover {
-  color: var(--navy-900);
+  color: var(--lime-300);
   text-decoration-color: currentColor;
 }
 
 :focus-visible {
-  outline: 2px solid var(--navy-700);
+  outline: 2px solid var(--lime-400);
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -111,10 +118,10 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  color: var(--text-900);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-100);
   text-wrap: balance;
 }
 
@@ -132,12 +139,11 @@ p {
 }
 
 .section {
-  padding-block: clamp(3.5rem, 9vw, 6.5rem);
+  padding-block: clamp(4rem, 10vw, 7.5rem);
 }
 
-.section--tint {
-  background: var(--paper-50);
-  border-block: 1px solid var(--border);
+.section--edge {
+  border-top: 1px solid var(--border);
 }
 
 .skip {
@@ -146,9 +152,9 @@ p {
   top: 0;
   z-index: 100;
   padding: 0.7rem 1.1rem;
-  background: var(--navy-800);
-  color: #fff;
-  font-weight: 600;
+  background: var(--lime-400);
+  color: var(--ink-950);
+  font-weight: 700;
   border-radius: 0 0 var(--radius-sm) 0;
 }
 
@@ -158,42 +164,37 @@ p {
 
 /* ------------------------------------------------------------- typography */
 
-/*
- * Section label. The orange mark is the CV's chevron, reduced to a single
- * triangle, and it is decoration: the text itself is navy.
- */
+/* Section label. Mono, lime, with a filled square. Loud but small. */
 .eyebrow {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.13em;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--navy-700);
+  color: var(--lime-400);
 }
 
 .eyebrow::before {
   content: '';
   flex: none;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 10px solid var(--orange-500);
+  width: 9px;
+  height: 9px;
+  background: var(--lime-400);
 }
 
 .section-title {
-  font-size: clamp(1.6rem, 3.6vw, 2.25rem);
-  margin-top: 0.9rem;
+  font-size: clamp(2rem, 5.5vw, 3.5rem);
+  margin-top: 1rem;
 }
 
 .lede {
-  font-size: clamp(1rem, 1.8vw, 1.125rem);
-  color: var(--text-600);
+  font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+  color: var(--text-300);
   max-width: var(--measure);
-  margin-top: 0.9rem;
+  margin-top: 1.1rem;
 }
 
 .mono {
@@ -201,14 +202,21 @@ p {
   font-size: 0.8125rem;
 }
 
-/* Small caps-ish label used above sidebar blocks and field names. */
 .label {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-900);
+  color: var(--lime-400);
+}
+
+/* A lime block behind a word, for the one thing that should stop the eye. */
+.mark {
+  background: var(--lime-400);
+  color: var(--ink-950);
+  padding-inline: 0.28em;
+  box-decoration-break: clone;
 }
 
 /* ----------------------------------------------------------------- badges */
@@ -219,13 +227,13 @@ p {
   gap: 0.4rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.07em;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.25rem 0.55rem;
+  padding: 0.25rem 0.6rem;
   border-radius: 999px;
   border: 1px solid var(--border-strong);
-  color: var(--text-600);
-  background: var(--paper);
+  color: var(--text-300);
   white-space: nowrap;
 }
 
@@ -238,16 +246,14 @@ p {
   flex: none;
 }
 
-/* In-use work gets the orange dot. The text stays navy for contrast. */
 .badge--live {
-  color: var(--navy-800);
-  border-color: var(--orange-500);
-  background: #fdf4e6;
+  color: var(--lime-400);
+  border-color: rgba(205, 255, 77, 0.4);
+  background: var(--lime-glow);
 }
 
 .badge--live::before {
-  background: var(--orange-600);
-  box-shadow: 0 0 0 3px rgba(239, 161, 52, 0.28);
+  box-shadow: 0 0 0 3px rgba(205, 255, 77, 0.2);
 }
 
 /* ---------------------------------------------------------------- buttons */
@@ -256,48 +262,37 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.78rem 1.25rem;
-  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.9375rem;
+  letter-spacing: -0.01em;
   text-decoration: none;
   border: 1px solid transparent;
   transition: transform 0.18s var(--ease), background 0.18s var(--ease),
     border-color 0.18s var(--ease), color 0.18s var(--ease);
 }
 
-/* Navy text on orange clears 8:1. */
 .btn--primary {
-  background: var(--orange-500);
-  color: var(--navy-900);
+  background: var(--lime-400);
+  color: var(--ink-950);
 }
 
 .btn--primary:hover {
-  background: var(--orange-400);
-  color: var(--navy-900);
-  transform: translateY(-2px);
-}
-
-.btn--solid {
-  background: var(--navy-800);
-  color: #fff;
-}
-
-.btn--solid:hover {
-  background: var(--navy-900);
-  color: #fff;
+  background: var(--lime-300);
+  color: var(--ink-950);
   transform: translateY(-2px);
 }
 
 .btn--ghost {
   border-color: var(--border-strong);
-  color: var(--navy-800);
-  background: var(--paper);
+  color: var(--text-100);
 }
 
 .btn--ghost:hover {
-  border-color: var(--navy-700);
-  color: var(--navy-900);
+  border-color: var(--lime-400);
+  color: var(--lime-400);
   transform: translateY(-2px);
 }
 
@@ -313,20 +308,20 @@ p {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
+  background: var(--ink-850);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: border-color 0.22s var(--ease), transform 0.22s var(--ease),
-    box-shadow 0.22s var(--ease);
+    background 0.22s var(--ease);
 }
 
 .card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-3px);
-  box-shadow: 0 14px 32px -18px rgba(13, 35, 64, 0.32);
+  border-color: rgba(205, 255, 77, 0.45);
+  background: var(--ink-800);
+  transform: translateY(-4px);
   color: inherit;
 }
 
@@ -338,10 +333,32 @@ p {
 
 /* -------------------------------------------------------------- utilities */
 
+.chips {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chips li {
+  font-size: 0.8125rem;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--ink-850);
+  color: var(--text-300);
+}
+
+.chips--mono li {
+  font-family: var(--font-mono);
+  color: var(--text-200);
+}
+
 hr.rule {
   border: 0;
   border-top: 1px solid var(--border);
-  margin-block: 2.25rem;
+  margin-block: 2.5rem;
 }
 
 /*

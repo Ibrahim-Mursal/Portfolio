@@ -62,27 +62,42 @@ engineering portfolio.
 
 ## Design
 
-The palette is taken from the CV so the two documents read as one identity. Deep
-navy carries structure and every piece of emphasis; the CV's orange is reserved
-for attention, and the geometric chevron band from the top of the CV is the
-site's masthead.
+Near-black ground, one accent: electric lime `#CDFF4D`. The accent is meant to
+be loud, and it has a practical advantage over a warm accent on light ground.
+Lime on `#0A0B0D` clears roughly 15:1, so it can carry text, borders, fills and
+large numerals with no contrast exception anywhere. An earlier version of this
+site used orange on white, which at `#EFA134` sits near 1.9:1 and cannot legally
+be used as text at all.
 
-**Orange is never text.** At `#EFA134` it sits around 1.9:1 on white and fails
-every contrast threshold, so it appears only as fills, borders, rules and
-geometry, and any text sitting on top of it is navy. Links, labels and small
-capitalised headings are navy, which clears 7:1. A contrast pass over every text
-and background pair on the built pages currently reports zero failures against
-WCAG AA, and one of the two mistakes it caught was orange used for a small
-number, so the rule is worth keeping.
+**The CV is an information source, not a design source.** Contact details,
+education, languages, strengths and work history come from it. Nothing about the
+layout or palette does.
 
-Type is Sora for display, Inter for body, JetBrains Mono for metadata, all
-self-hosted through `@fontsource` so no request leaves the origin.
+There is no second colour. One accent carries every piece of emphasis, and the
+only place a colour is used at full strength on a large area is the lime strip
+under the hero.
+
+Type is Space Grotesk for display, Inter for body, JetBrains Mono for metadata,
+all self-hosted through `@fontsource` so no request leaves the origin.
+
+A contrast pass over every text and background pair on the built pages reports
+zero failures against WCAG AA. Two rules came out of what it caught:
+
+- **The two muted greys are a floor, not a preference.** On the darkest surface a
+  neutral grey has to sit around `#8A8A8A` to clear 4.5:1 at 11px. An earlier,
+  darker pair failed on four elements at once. If you darken `--text-400` or
+  `--text-500`, re-run the pass.
+- **The outlined surname needs its `@supports` guard.**
+  `-webkit-text-stroke` is non-standard, so `.hero__last` is solid lime by
+  default and only becomes transparent-plus-outline where the stroke is actually
+  supported. Without that guard, an engine lacking the stroke renders the
+  surname invisible.
 
 Project covers are generated SVG (`src/components/Cover.astro`), one motif per
 project, seeded deterministically so a cover never changes between builds. They
 are not screenshots and not device mockups: a screenshot of an admin table says
 nothing at card size, and a mockup of non-public work would be fiction. All five
-use the same navy and orange, because five accent colours across five cards is
+use the same lime on near-black, because five accent colours across five cards is
 how a palette stops meaning anything.
 
 Project cards carry no separate call to action. The whole card is the link.

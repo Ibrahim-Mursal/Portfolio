@@ -8,9 +8,9 @@
  * the shape of each project: a sheet of labels, a ledger, an accord bloom, a
  * rising arc, a stack of boards.
  *
- * All five use the same navy and orange as the rest of the site. The motif is
- * what distinguishes a project, not a per-project colour: six accent colours
- * across five cards is how a palette stops meaning anything.
+ * All five use the same lime on near-black. The motif is what distinguishes a
+ * project, not a per-project colour: five accent colours across five cards is
+ * how a palette stops meaning anything.
  */
 import type { Project } from '../data/projects';
 
@@ -23,11 +23,10 @@ interface Props {
 
 const { cover, seed, tall = false } = Astro.props;
 
-const structure = '#245a90';
-const faintLine = 'rgba(36, 90, 144, 0.28)';
-const fill = 'rgba(36, 90, 144, 0.10)';
-const accent = '#efa134';
-const accentSoft = 'rgba(239, 161, 52, 0.30)';
+const line = 'rgba(205, 255, 77, 0.85)';
+const faint = 'rgba(205, 255, 77, 0.22)';
+const fill = 'rgba(205, 255, 77, 0.10)';
+const dim = 'rgba(255, 255, 255, 0.14)';
 
 // Deterministic pseudo-random from the seed, so a cover never changes between
 // builds while each project still gets its own arrangement.
@@ -57,16 +56,16 @@ const rand = (i: number) => {
                   width={66}
                   height={44}
                   rx={3}
-                  fill={active ? 'rgba(239, 161, 52, 0.13)' : 'none'}
-                  stroke={active ? accent : faintLine}
+                  fill={active ? fill : 'none'}
+                  stroke={active ? line : dim}
                   stroke-width={active ? 1.6 : 1}
                 />
                 {active && (
                   <g>
-                    <rect x={x + 8} y={y + 10} width={30} height={3} rx={1.5} fill={structure} />
-                    <rect x={x + 8} y={y + 18} width={44} height={2} rx={1} fill={faintLine} />
-                    <rect x={x + 8} y={y + 24} width={22} height={2} rx={1} fill={faintLine} />
-                    <rect x={x + 8} y={y + 32} width={14} height={5} rx={1} fill={accent} />
+                    <rect x={x + 8} y={y + 10} width={30} height={3} rx={1.5} fill={line} />
+                    <rect x={x + 8} y={y + 18} width={44} height={2} rx={1} fill={faint} />
+                    <rect x={x + 8} y={y + 24} width={22} height={2} rx={1} fill={faint} />
+                    <rect x={x + 8} y={y + 32} width={14} height={5} rx={1} fill={line} />
                   </g>
                 )}
               </g>
@@ -86,13 +85,13 @@ const rand = (i: number) => {
             const split = total * (0.35 + rand(i + 9) * 0.4);
             return (
               <g>
-                <rect x={44} y={y} width={total} height={9} rx={4.5} fill={fill} />
-                <rect x={44} y={y} width={split} height={9} rx={4.5} fill={accentSoft} />
-                <rect x={44} y={y} width={4} height={9} rx={2} fill={accent} />
+                <rect x={44} y={y} width={total} height={9} rx={4.5} fill={dim} />
+                <rect x={44} y={y} width={split} height={9} rx={4.5} fill={faint} />
+                <rect x={44} y={y} width={4} height={9} rx={2} fill={line} />
               </g>
             );
           })}
-          <line x1={44} y1={232} x2={356} y2={232} stroke={structure} stroke-width="1.2" />
+          <line x1={44} y1={232} x2={356} y2={232} stroke={line} stroke-width="1.2" />
         </g>
       )
     }
@@ -112,20 +111,20 @@ const rand = (i: number) => {
                   y1={Math.sin(a) * 26}
                   x2={Math.cos(a) * r}
                   y2={Math.sin(a) * r}
-                  stroke={faintLine}
+                  stroke={dim}
                   stroke-width="1"
                 />
                 <circle
                   cx={Math.cos(a) * r}
                   cy={Math.sin(a) * r}
                   r={2.5 + rand(i + 4) * 3.5}
-                  fill={hot ? accent : 'rgba(36, 90, 144, 0.45)'}
+                  fill={hot ? line : faint}
                 />
               </g>
             );
           })}
-          <circle r="22" fill="none" stroke={structure} stroke-width="1.4" />
-          <circle r="7" fill={accent} />
+          <circle r="22" fill="none" stroke={line} stroke-width="1.4" />
+          <circle r="7" fill={line} />
         </g>
       )
     }
@@ -139,11 +138,11 @@ const rand = (i: number) => {
               d={`M ${20 - i * 4} 250 A ${150 + i * 20} ${150 + i * 20} 0 0 1 ${
                 330 + i * 8
               } 250`}
-              stroke={i % 2 === 0 ? faintLine : fill}
+              stroke={i % 2 === 0 ? dim : fill}
             />
           ))}
-          <path d="M 60 250 A 140 140 0 0 1 340 250" stroke={structure} stroke-width="1.6" />
-          <circle cx="200" cy="110" r="6" fill={accent} stroke="none" />
+          <path d="M 60 250 A 140 140 0 0 1 340 250" stroke={line} stroke-width="1.6" />
+          <circle cx="200" cy="110" r="6" fill={line} stroke="none" />
         </g>
       )
     }
@@ -159,14 +158,14 @@ const rand = (i: number) => {
               <g transform={`translate(${86 - off * 0.55} ${52 + off})`}>
                 <path
                   d="M 0 0 L 150 0 L 190 42 L 40 42 Z"
-                  fill={top ? 'rgba(239, 161, 52, 0.13)' : 'none'}
-                  stroke={top ? accent : faintLine}
+                  fill={top ? fill : 'none'}
+                  stroke={top ? line : dim}
                   stroke-width={top ? 1.6 : 1}
                 />
               </g>
             );
           })}
-          <line x1={44} y1={236} x2={356} y2={236} stroke={structure} stroke-width="1.2" />
+          <line x1={44} y1={236} x2={356} y2={236} stroke={faint} stroke-width="1" />
         </g>
       )
     }
@@ -177,7 +176,7 @@ const rand = (i: number) => {
   .cover {
     position: relative;
     aspect-ratio: 400 / 200;
-    background: var(--paper-100);
+    background: var(--ink-800);
     border-bottom: 1px solid var(--border);
     overflow: hidden;
   }

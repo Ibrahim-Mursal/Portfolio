@@ -8,14 +8,14 @@ const isWork = path.startsWith('/work');
 <header class="site-head">
   <div class="shell site-head__inner">
     <a class="wordmark" href="/">
+      <span class="wordmark__dot" aria-hidden="true"></span>
       <span class="wordmark__name">{profile.name}</span>
-      <span class="wordmark__role">{profile.role}</span>
     </a>
 
     <nav aria-label="Primary">
       <a href="/work/" aria-current={isWork ? 'page' : undefined}>Work</a>
       <a href="/#approach">Approach</a>
-      <a href="/#contact">Contact</a>
+      <a class="nav__cta" href="/#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -25,8 +25,8 @@ const isWork = path.startsWith('/work');
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
+    background: rgba(10, 11, 13, 0.86);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
 
@@ -39,55 +39,66 @@ const isWork = path.startsWith('/work');
   }
 
   .wordmark {
-    display: flex;
-    flex-direction: column;
-    gap: 0.05rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     text-decoration: none;
-    color: var(--text-900);
-    /* The orange keyline is the CV's accent, reduced to one mark. */
-    border-left: 3px solid var(--orange-500);
-    padding-left: 0.7rem;
+    color: var(--text-100);
+  }
+
+  .wordmark__dot {
+    width: 9px;
+    height: 9px;
+    background: var(--lime-400);
+    flex: none;
   }
 
   .wordmark__name {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.9375rem;
     letter-spacing: -0.01em;
-  }
-
-  .wordmark__role {
-    font-size: 0.6875rem;
-    letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: var(--text-500);
   }
 
   nav {
     display: flex;
-    gap: clamp(0.9rem, 3vw, 2rem);
+    align-items: center;
+    gap: clamp(0.9rem, 3vw, 1.9rem);
   }
 
   nav a {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--text-600);
+    color: var(--text-300);
     text-decoration: none;
     padding-block: 0.3rem;
     border-bottom: 2px solid transparent;
   }
 
   nav a:hover {
-    color: var(--navy-900);
+    color: var(--text-100);
   }
 
   nav a[aria-current='page'] {
-    color: var(--navy-900);
-    border-bottom-color: var(--orange-500);
+    color: var(--text-100);
+    border-bottom-color: var(--lime-400);
   }
 
-  @media (max-width: 30rem) {
-    .wordmark__role {
+  .nav__cta {
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 0.4rem 0.95rem;
+    color: var(--text-100);
+  }
+
+  .nav__cta:hover {
+    border-color: var(--lime-400);
+    color: var(--lime-400);
+  }
+
+  @media (max-width: 26rem) {
+    .nav__cta {
       display: none;
     }
   }

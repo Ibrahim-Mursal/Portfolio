@@ -7,9 +7,9 @@ import { projects } from '../data/projects';
   <section class="notfound">
     <div class="shell">
       <p class="eyebrow">404</p>
-      <h1 class="notfound__title">That page does not exist</h1>
+      <h1 class="notfound__title">Nothing here</h1>
       <p class="lede">
-        Nothing here at this address. The case studies are all one click away.
+        That address does not exist. The case studies are all one click away.
       </p>
 
       <ul class="notfound__list">
@@ -23,7 +23,7 @@ import { projects } from '../data/projects';
         }
       </ul>
 
-      <a class="btn btn--solid" href="/">
+      <a class="btn btn--primary" href="/">
         <span aria-hidden="true">&larr;</span> Back home
       </a>
     </div>
@@ -32,18 +32,20 @@ import { projects } from '../data/projects';
 
 <style>
   .notfound {
-    padding-block: clamp(3rem, 9vw, 6rem);
+    padding-block: clamp(3.5rem, 10vw, 7rem);
   }
 
   .notfound__title {
-    font-size: clamp(1.85rem, 5.5vw, 3rem);
-    margin-top: 0.9rem;
+    font-size: clamp(2.5rem, 10vw, 5.5rem);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: -0.045em;
   }
 
   .notfound__list {
     list-style: none;
     padding: 0;
-    margin-block: 2.25rem;
+    margin-block: 2.5rem;
     max-width: 34rem;
   }
 
@@ -52,7 +54,7 @@ import { projects } from '../data/projects';
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    padding-block: 0.8rem;
+    padding-block: 0.85rem;
     border-bottom: 1px solid var(--border);
   }
 
