@@ -1,0 +1,92 @@
+---
+import { profile } from '../data/profile';
+
+const path = Astro.url.pathname;
+const isWork = path.startsWith('/work');
+---
+
+<header class="site-head">
+  <div class="shell site-head__inner">
+    <a class="wordmark" href="/">
+      <span class="wordmark__name">{profile.name}</span>
+      <span class="wordmark__role mono">{profile.role}</span>
+    </a>
+
+    <nav aria-label="Primary">
+      <a href="/work/" aria-current={isWork ? 'page' : undefined}>Work</a>
+      <a href="/#approach">Approach</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-head {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--ink-900) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .site-head__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 4.25rem;
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    text-decoration: none;
+    color: var(--text-100);
+  }
+
+  .wordmark__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+  }
+
+  .wordmark__role {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-500);
+  }
+
+  nav {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  nav a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-300);
+    text-decoration: none;
+    padding-block: 0.35rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  nav a:hover {
+    color: var(--text-100);
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--text-100);
+    border-bottom-color: var(--azure-500);
+  }
+
+  @media (max-width: 30rem) {
+    .wordmark__role {
+      display: none;
+    }
+  }
+</style>

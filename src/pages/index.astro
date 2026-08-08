@@ -1,0 +1,287 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+import { profile } from '../data/profile';
+
+const liveCount = projects.filter((p) => p.status === 'live').length;
+---
+
+<Base title={profile.name} description={profile.tagline}>
+  <!-- ------------------------------------------------------------- hero -->
+  <section class="hero">
+    <div class="shell">
+      <p class="eyebrow">{profile.role}</p>
+      <h1 class="hero__title">{profile.name}</h1>
+      <p class="hero__tagline">{profile.tagline}</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#contact">Start a project</a>
+        <a class="btn btn--ghost" href="/work/">
+          See the work <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      <dl class="hero__facts">
+        <div>
+          <dt class="mono">Projects</dt>
+          <dd>{projects.length}</dd>
+        </div>
+        <div>
+          <dt class="mono">In daily use</dt>
+          <dd>{liveCount}</dd>
+        </div>
+        <div>
+          <dt class="mono">Platforms</dt>
+          <dd>Desktop, web, POS</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- work -->
+  <section class="section" id="work">
+    <div class="shell">
+      <p class="eyebrow">Selected work</p>
+      <h2 class="section-title">Six projects, and what was hard about each</h2>
+      <p class="lede">
+        Every case study below leads with the problem rather than the stack. The numbers are
+        the real ones, and where something is still open I have said so.
+      </p>
+
+      <div class="grid">
+        {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- approach -->
+  <section class="section" id="approach">
+    <div class="shell">
+      <p class="eyebrow">How I work</p>
+      <h2 class="section-title">Six positions I actually took</h2>
+      <p class="lede">
+        Not values. Each of these came out of a specific decision on a specific project,
+        and each one is traceable to a case study on this site.
+      </p>
+
+      <ol class="principles">
+        {
+          profile.principles.map((principle, i) => (
+            <li class="principle reveal" style={`--reveal-delay:${Math.min(i, 5) * 60}ms`}>
+              <span class="principle__num mono">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="principle__title">{principle.title}</h3>
+                <p class="principle__body">{principle.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- toolkit -->
+  <section class="section" id="toolkit">
+    <div class="shell">
+      <p class="eyebrow">Toolkit</p>
+      <h2 class="section-title">What the work is built with</h2>
+      <p class="lede">
+        Limited to things used on the projects listed here, so the list can be checked
+        against the case studies.
+      </p>
+
+      <div class="toolkit">
+        {
+          profile.toolkit.map((group) => (
+            <div class="toolkit__group reveal">
+              <h3 class="toolkit__label mono">{group.group}</h3>
+              <ul>
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- contact -->
+  <section class="section contact" id="contact">
+    <div class="shell">
+      <p class="eyebrow">Contact</p>
+      <h2 class="section-title">Have something that needs building?</h2>
+      <p class="lede">
+        Tell me what it has to do and where it has to run. If it is not something I should
+        take on I will say so rather than quote for it.
+      </p>
+
+      <div class="contact__actions">
+        <a class="btn btn--primary" href={`mailto:${profile.email}`}>{profile.email}</a>
+        {
+          profile.links.map((link) => (
+            <a class="btn btn--ghost" href={link.href} rel="noopener">
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --------------------------------------------------------------- hero */
+  .hero {
+    position: relative;
+    padding-block: clamp(4.5rem, 13vw, 9rem) clamp(3.5rem, 9vw, 6rem);
+    overflow: hidden;
+  }
+
+  /* One soft azure field behind the hero. The only decorative gradient. */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: -40% 20% auto -10%;
+    height: 42rem;
+    background: radial-gradient(
+      55% 50% at 30% 40%,
+      var(--azure-glow) 0%,
+      transparent 72%
+    );
+    pointer-events: none;
+  }
+
+  .hero > .shell {
+    position: relative;
+  }
+
+  .hero__title {
+    font-size: clamp(2.75rem, 9vw, 5.25rem);
+    margin-top: 1.25rem;
+    letter-spacing: -0.035em;
+  }
+
+  .hero__tagline {
+    margin-top: 1.5rem;
+    max-width: 40ch;
+    font-size: clamp(1.125rem, 2.6vw, 1.5rem);
+    line-height: 1.45;
+    color: var(--text-200);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+
+  .hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero__facts dt {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-500);
+  }
+
+  .hero__facts dd {
+    margin-top: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    color: var(--text-100);
+  }
+
+  /* --------------------------------------------------------------- work */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  /* ---------------------------------------------------------- approach */
+  .principles {
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+    gap: 2rem 2.5rem;
+  }
+
+  .principle {
+    display: flex;
+    gap: 1.1rem;
+  }
+
+  .principle__num {
+    flex: none;
+    color: var(--azure-500);
+    font-size: 0.75rem;
+    padding-top: 0.3rem;
+  }
+
+  .principle__title {
+    font-size: 1.0625rem;
+  }
+
+  .principle__body {
+    margin-top: 0.55rem;
+    font-size: 0.9375rem;
+    color: var(--text-300);
+  }
+
+  /* ----------------------------------------------------------- toolkit */
+  .toolkit {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+    gap: 1.75rem 2rem;
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .toolkit__label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azure-400);
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .toolkit ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .toolkit li {
+    font-size: 0.9375rem;
+    color: var(--text-300);
+  }
+
+  /* ----------------------------------------------------------- contact */
+  .contact {
+    background: var(--ink-850);
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+</style>

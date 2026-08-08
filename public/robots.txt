@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update the host here at the same time as `site` in astro.config.mjs.
+Sitemap: https://ibrahimmursal.com/sitemap-index.xml

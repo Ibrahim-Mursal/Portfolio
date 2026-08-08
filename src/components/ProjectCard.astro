@@ -1,0 +1,121 @@
+---
+import Cover from './Cover.astro';
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  /** Stagger index for the reveal. */
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+---
+
+<a
+  class="card project reveal"
+  href={`/work/${project.slug}/`}
+  style={`--reveal-delay:${Math.min(index, 5) * 70}ms`}
+>
+  <Cover cover={project.cover} hue={project.hue} />
+
+  <div class="project__body">
+    <div class="project__top">
+      <p class="mono project__client">{project.client}</p>
+      <span
+        class="badge"
+        class:list={[
+          { 'badge--live': project.status === 'live' },
+          { 'badge--active': project.status === 'active' },
+        ]}>{project.statusLabel}</span
+      >
+    </div>
+
+    <h3 class="project__name">{project.name}</h3>
+    <p class="project__summary">{project.summary}</p>
+
+    <ul class="project__stack">
+      {project.stack.slice(0, 4).map((tech) => <li class="mono">{tech}</li>)}
+      {project.stack.length > 4 && <li class="mono">+{project.stack.length - 4}</li>}
+    </ul>
+
+    <p class="project__cta mono">
+      Read the case study <span aria-hidden="true">&rarr;</span>
+    </p>
+  </div>
+</a>
+
+<style>
+  .project__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.4rem 1.5rem 1.5rem;
+  }
+
+  .project__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .project__client {
+    color: var(--text-500);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.6875rem;
+  }
+
+  .project__name {
+    font-size: 1.375rem;
+  }
+
+  .project__summary {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    color: var(--text-300);
+    line-height: 1.6;
+  }
+
+  .project__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin-top: 1.15rem;
+  }
+
+  .project__stack li {
+    font-size: 0.6875rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: var(--ink-750);
+    color: var(--text-400);
+  }
+
+  .project__cta {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    color: var(--azure-400);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .project__cta span {
+    display: inline-block;
+    transition: transform 0.2s var(--ease);
+  }
+
+  .card:hover .project__cta span {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover .project__cta span {
+      transform: none;
+    }
+  }
+</style>

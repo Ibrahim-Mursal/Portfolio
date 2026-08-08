@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data/projects';
+---
+
+<Base
+  title="Work"
+  description="Six case studies across desktop, web and point-of-sale, each written around the problem rather than the stack."
+>
+  <section class="head">
+    <div class="shell">
+      <p class="eyebrow">Work</p>
+      <h1 class="head__title">Case studies</h1>
+      <p class="lede">
+        Six projects. Each one leads with the situation before the work, then the parts that
+        were genuinely hard, then what is still open. Client internals are left out; the
+        numbers are not.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="grid">
+        {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    padding-block: clamp(3.5rem, 9vw, 6rem) 0;
+  }
+
+  .head__title {
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    margin-top: 1.1rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+  }
+</style>
