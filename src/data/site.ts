@@ -118,7 +118,7 @@ export const site = {
         'Replaced the shop’s licensed label software. Staff print from the counter PC or from a phone anywhere in the store.',
       points: [
         'Print from any phone on the shop network',
-        'Search around 557 perfumes by ID, with photos and brand logos',
+        'Search around 550+ perfumes by ID, with photos and brand logos',
         'Saved label layouts and a print history you can reprint from',
       ],
       stack: ['C#', '.NET 8', 'WPF', 'ASP.NET Core'],
