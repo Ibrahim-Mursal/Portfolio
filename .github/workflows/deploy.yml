@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+# Runs on every push to main. GitHub Pages needs a build step here because the
+# repo holds Astro source, not the static output — nothing serves correctly
+# until `astro build` has run.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy at a time; a second push while one is running cancels the
+# in-flight run rather than racing it.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          # This repo is the root site (<owner>.github.io), so the published
+          # URL is always this, with no repo-name subpath. Astro writes it into
+          # canonical links, the Open Graph URL and the social preview image
+          # URL. Taken from the repository owner rather than hardcoded, so
+          # forking or renaming the account doesn't leave it stale.
+          SITE_URL: https://${{ github.repository_owner }}.github.io
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

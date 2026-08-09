@@ -40,6 +40,25 @@ just point somewhere you did not intend.
 
 Locally, with no variable set, it falls back to `http://localhost:4321`.
 
+### GitHub Pages
+
+`.github/workflows/deploy.yml` builds and publishes on every push to `main`.
+Enable it once in the repo: **Settings → Pages → Source → GitHub Actions.**
+
+It assumes the repo is named `<your-username>.github.io` — a root site, served
+at the domain root with no `/repo-name/` subpath. The workflow derives
+`SITE_URL` from the repo owner automatically, so nothing needs editing. A
+project-page repo (any other name, served under a subpath) is not supported as
+shipped: the icons, logos and social preview image all use root-absolute paths
+(`/favicon.svg`, `/logos/*.png`, `/og.png`), which would 404 under a subpath
+without further changes.
+
+**GitHub Pages does not read `dist/_headers`.** It has no custom-headers
+feature at all, unlike Netlify or Cloudflare Pages. The file still gets
+generated and sits in the published output; it is simply inert there. The
+Content-Security-Policy and other headers in the Security section below apply
+only on hosts that support them.
+
 ## What is on the page
 
 Hero and pitch, a scrolling strip of companies worked with, four projects, a
