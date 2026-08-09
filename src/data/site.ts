@@ -31,8 +31,12 @@ export const site = {
   name: 'Ibrahim Mursal',
   role: 'Computer engineering student',
 
-  /** The pitch. */
-  pitch: 'We make your job easier and faster.',
+  /**
+   * The headline, split so the accent colour lands on the second half. Kept in
+   * two parts rather than one string because the hero needs the break point,
+   * and kept here rather than hardcoded in the page so there is one copy of it.
+   */
+  pitch: { lead: 'We make your job', accent: 'easier and faster' },
 
   /**
    * Search-result and link-preview text. Separate from `intro` because that one

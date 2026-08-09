@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 
-# Update the host here at the same time as `site` in astro.config.mjs.
-Sitemap: https://ibrahimmursal.com/sitemap-index.xml
+# No Sitemap line on purpose. The site is a single page, which a crawler finds
+# from the root, and the previous line pointed at a sitemap-index.xml that was
+# never generated. Naming a file that 404s is worse than naming none.

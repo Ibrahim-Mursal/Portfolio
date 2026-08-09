@@ -18,6 +18,28 @@ const { title, description, noindex = false } = Astro.props;
 
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+/** Absolute, because link previews will not resolve a relative path. */
+const ogImage = new URL('/og.png', Astro.site).href;
+
+/**
+ * Tells search engines that the site is one named person and what they do.
+ * Kept minimal on purpose: only facts already visible on the page.
+ */
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  email: `mailto:${site.email}`,
+  telephone: site.phone,
+  url: new URL('/', Astro.site).href,
+  address: { '@type': 'PostalAddress', addressLocality: 'Hawler (Erbil)', addressCountry: 'IQ' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: site.education.school },
+  knowsLanguage: site.languages,
+  knowsAbout: site.skills,
+  sameAs: site.links.filter((l) => l.href.startsWith('http')).map((l) => l.href),
+};
 ---
 
 <!doctype html>
@@ -31,10 +53,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     {noindex && <meta name="robots" content="noindex" />}
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <!--
+      A `summary_large_image` card with no image renders as a bare link, which
+      is how this shipped until now. WhatsApp, LinkedIn and Twitter all read
+      these tags.
+    -->
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name}. ${site.pitch.lead} ${site.pitch.accent}.`} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
 
     <meta name="theme-color" content="#080b0f" />
 
@@ -51,6 +85,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <script is:inline>
       document.documentElement.classList.add('js');
     </script>
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   </head>
 
   <body>
