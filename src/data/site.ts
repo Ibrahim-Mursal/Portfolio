@@ -61,13 +61,10 @@ export const site = {
   location: 'Hawler (Erbil), Iraq',
 
   /**
-   * Says both things at once, and the split is real rather than aspirational.
-   * A label printer on a counter and a till in a shop need installing and staff
-   * shown how to use them, which is the one thing an overseas freelancer cannot
-   * do. Websites do not. Claiming to be simply worldwide would trade that
-   * advantage, and the local search visibility, for a vaguer promise.
+   * Sits directly under the phone and city, so the pair reads as both at once:
+   * based in Hawler, and open to work anywhere.
    */
-  availability: 'On-site for shop software, remote for web work.',
+  availability: 'Available worldwide · remote',
 
   // Deleting an entry removes it from the contact section and the footer.
   links: [
