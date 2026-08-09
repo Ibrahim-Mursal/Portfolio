@@ -15,7 +15,12 @@ export interface Project {
   inUse: boolean;
   /** One or two sentences. Keep it short. */
   summary: string;
-  /** Three points, maximum. */
+  /**
+   * The three main things it does, from the point of view of the person using
+   * it. Not development notes: "renders 5.3x faster than the first version"
+   * describes my week, "print from any phone on the shop network" describes
+   * what they get.
+   */
   points: string[];
   stack: string[];
   /** Which motif the card mark draws. */
@@ -28,10 +33,21 @@ export const site = {
 
   /** The pitch. */
   pitch: 'We make your job easier and faster.',
-  pitchLead: 'software that takes the slow part of your day and removes it',
 
+  /**
+   * Search-result and link-preview text. Separate from `intro` because that one
+   * is about how I work, which tells a search engine nothing about what I make.
+   */
+  metaDescription:
+    'Desktop and web software for shops: label printing, point of sale, catalogues and websites. Built and supported by Ibrahim Mursal in Hawler, Iraq.',
+
+  /**
+   * The About text. Deliberately says nothing about the projects: the work
+   * section above it already does that, and repeating it there wastes the one
+   * place on the page that can say how I work rather than what I have made.
+   */
   intro:
-    'I build software that real shops use every day. A label printer on a counter, a till that handles partner stock in two languages, catalogue and cafe sites. Fourth-year computer engineering student at Tishk University.',
+    'Fourth-year computer engineering student at Tishk University. I take a job from the first conversation through to the software running on the owner’s machine: working out what it actually has to do, building it, setting it up on site, and showing staff how to use it. Small shops do not have an IT department, so what matters to me is that it keeps working after I leave.',
 
   email: 'ibrahimmursal2004@gmail.com',
   phone: '+964 750 599 8014',
@@ -100,9 +116,9 @@ export const site = {
       summary:
         'Replaced the shop’s licensed label software. Staff print from the counter PC or from a phone anywhere in the store.',
       points: [
-        'Labels render 5.3x faster than the first version',
         'Print from any phone on the shop network',
-        'One file to run, no installer',
+        'Search around 557 perfumes by ID, with photos and brand logos',
+        'Saved label layouts and a print history you can reprint from',
       ],
       stack: ['C#', '.NET 8', 'WPF', 'ASP.NET Core'],
       mark: 'label',
@@ -116,9 +132,9 @@ export const site = {
       summary:
         'A fragrance catalogue you browse by scent, with an admin area for the team who keep it current.',
       points: [
-        'Filter by scent accord, brand or price',
-        'Admin area for the team',
-        'Photos and brand logos throughout',
+        'Browse and filter by scent accord, brand or price',
+        'Every fragrance has its own photos, notes and accords',
+        'Admin area so the team can add and edit it themselves',
       ],
       stack: ['React', 'TypeScript', 'Supabase'],
       mark: 'bottle',
@@ -131,7 +147,11 @@ export const site = {
       inUse: true,
       summary:
         'Site for a Dutch cafe. Menu, opening hours and location, in Dutch and English.',
-      points: ['Dutch and English', 'Menu and opening hours', 'Fast on a phone'],
+      points: [
+        'Menu, opening hours and how to find the place',
+        'Dutch and English',
+        'Hours and address marked up so Google can show them in search',
+      ],
       stack: ['HTML', 'CSS', 'JavaScript'],
       mark: 'cup',
     },
@@ -144,9 +164,9 @@ export const site = {
       summary:
         'A till for an electronics shop that sells its own stock next to partner consignment items.',
       points: [
-        'Bargaining on price is built in',
-        'Splits profit per partner automatically',
-        'English and Kurdish, phone or desktop',
+        'Bargaining on price is built into every sale',
+        'Splits the profit per partner automatically',
+        'English and Kurdish, on a phone or a desktop',
       ],
       stack: ['React', 'Express', 'SQLite'],
       mark: 'till',

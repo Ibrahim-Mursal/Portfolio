@@ -5,7 +5,7 @@ import Clients from '../components/Clients.astro';
 import { site } from '../data/site';
 ---
 
-<Base title={site.name} description={`${site.pitch} ${site.intro}`}>
+<Base title={site.name} description={site.metaDescription}>
   <!-- ------------------------------------------------------------- hero -->
   <section class="hero">
     <div class="shell hero__inner">
