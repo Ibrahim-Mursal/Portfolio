@@ -136,6 +136,60 @@ relative path, which is why `SITE_URL` matters on a custom domain.
 
 If the headline or the pitch changes, regenerate the image so the two agree.
 
+## Security
+
+There is very little to attack. No forms, no inputs, no accounts, no cookies, no
+storage, no database, no API, no analytics and no third-party scripts. The whole
+site ships about 420 bytes of hand-written JavaScript and loads nothing from
+another origin. **Astro is a build tool here and never reaches the browser**, so
+the deployed artifact is plain HTML, CSS and those few lines.
+
+Hardening is therefore defence in depth rather than a fix for a known hole.
+
+### Response headers
+
+`scripts/generate-headers.mjs` runs as `postbuild` and writes `dist/_headers`,
+which **Netlify and Cloudflare Pages** read from the publish directory.
+**Vercel ignores it** and needs the same values in `vercel.json`.
+
+It is generated, not checked in, because the Content-Security-Policy pins each
+inline script by SHA-256 hash. A checked-in copy would go stale the moment a
+script changed, and a stale hash silently blocks the script.
+
+Two concessions in the policy, both deliberate:
+
+- **`style-src` allows `'unsafe-inline'`.** The page sets custom properties
+  through style attributes (reveal delays, per-logo heights). Far weaker a
+  concession than the same keyword in `script-src`.
+- **`font-src` allows `data:`.** Vite inlines assets under its size threshold,
+  and one font subset falls below it, so it arrives as a data URI in the
+  stylesheet while the other fifteen stay files. Without `data:` the page loses
+  that face. Fonts do not execute, and injecting one already requires the
+  ability to inject CSS.
+
+If you change the CSP, test it. `_headers` is not applied by a plain static
+server, so copy `dist/index.html`, add the policy as a
+`<meta http-equiv="Content-Security-Policy">`, load it and watch the console.
+That is how the `data:` font above was found, after the policy looked correct on
+paper.
+
+### Dependencies
+
+`npm audit` reports advisories against `astro`, `esbuild` and `sharp`. They are
+all build-time and none is reachable here:
+
+- The Astro advisories cover `define:vars`, spread props, named slots,
+  `transition:*` directives, hydrated islands and SSR error pages. This site
+  uses none of them and has no server.
+- The `esbuild` one affects `astro dev` on Windows. It binds to localhost; do
+  not run the dev server with `--host` on a network you do not trust.
+- `sharp` is only invoked by `astro:assets`, which this site never uses. The
+  logos are plain files in `public/`.
+
+Clearing them needs Astro 7, two majors ahead. That is a real upgrade to plan,
+not an emergency: the built output contains no Astro code, so none of it can
+reach a visitor.
+
 ## The scroll reveal
 
 The rule that hides revealed elements is gated behind a `.js` class set by an
