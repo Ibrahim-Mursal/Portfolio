@@ -162,9 +162,20 @@ import { site } from '../data/site';
     }
   }
 
+  /*
+   * Set large, in the display face. The text is three short sentences by
+   * design, and at body size that reads as a thin paragraph rather than as a
+   * statement.
+   */
   .about__intro {
-    margin-top: 1rem;
-    max-width: var(--measure);
+    margin-top: 1.1rem;
+    max-width: 32ch;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.3rem, 2.8vw, 1.85rem);
+    line-height: 1.32;
+    letter-spacing: -0.015em;
+    color: var(--text-100);
   }
 
   .about__skills {

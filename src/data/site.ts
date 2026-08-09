@@ -42,12 +42,14 @@ export const site = {
     'Desktop and web software for shops: label printing, point of sale, catalogues and websites. Built and supported by Ibrahim Mursal in Hawler, Iraq.',
 
   /**
-   * The About text. Deliberately says nothing about the projects: the work
-   * section above it already does that, and repeating it there wastes the one
-   * place on the page that can say how I work rather than what I have made.
+   * The About text.
+   *
+   * Says nothing about the projects: the work section directly above already
+   * does. It also does not repeat the degree and university, which the Studying
+   * panel beside it carries. Short sentences and plain words on purpose.
    */
   intro:
-    'Fourth-year computer engineering student at Tishk University. I take a job from the first conversation through to the software running on the owner’s machine: working out what it actually has to do, building it, setting it up on site, and showing staff how to use it. Small shops do not have an IT department, so what matters to me is that it keeps working after I leave.',
+    'Tell me the problem. I build it, set it up in your shop, and show your team how to use it. Then it just runs, with no IT department needed.',
 
   email: 'ibrahimmursal2004@gmail.com',
   phone: '+964 750 599 8014',
@@ -93,7 +95,6 @@ export const site = {
     'C#',
     '.NET',
     'React',
-    'TypeScript',
     'JavaScript',
     'C++',
     'SQL',
@@ -136,7 +137,7 @@ export const site = {
         'Every fragrance has its own photos, notes and accords',
         'Admin area so the team can add and edit it themselves',
       ],
-      stack: ['React', 'TypeScript', 'Supabase'],
+      stack: ['React', 'Supabase'],
       mark: 'bottle',
     },
     {
