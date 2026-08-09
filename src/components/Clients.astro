@@ -14,7 +14,12 @@
  */
 import { site } from '../data/site';
 
-const REPEATS = 8;
+/*
+ * Enough passes to keep the track wider than any viewport after it has been
+ * translated by one pass. The check is `track - onePass >= viewport`; with the
+ * wide spacing below, six passes clears a 2560px window with room to spare.
+ */
+const REPEATS = 6;
 const items = Array.from({ length: REPEATS }, () => site.clients).flat();
 const realCount = site.clients.length;
 ---
@@ -101,7 +106,13 @@ const realCount = site.clients.length;
     width: max-content;
     list-style: none;
     padding: 0;
-    animation: marquee 42s linear infinite;
+    /*
+     * One cycle moves exactly one pass, so the on-screen speed is
+     * (pass width / duration). The wide spacing below makes a pass roughly
+     * 1.7x wider than it was, and the duration is raised in step to keep the
+     * drift at the same calm rate rather than letting it speed up.
+     */
+    animation: marquee 66s linear infinite;
   }
 
   .marquee:hover .marquee__track,
@@ -115,8 +126,14 @@ const realCount = site.clients.length;
     align-items: center;
     /* Tall enough for the tallest logo plus a little air. */
     height: 4.25rem;
-    /* Spacing lives here, not in `gap`. See the note at the top of the file. */
-    margin-inline-end: clamp(2.25rem, 5vw, 4rem);
+    /*
+     * Spacing lives here, not in `gap`. See the note at the top of the file.
+     *
+     * Wide on purpose. At the previous 4rem a full pass was about 375px inside
+     * a 910px window, so every logo was on screen two or three times at once
+     * and the strip read as a repeating pattern rather than a client list.
+     */
+    margin-inline-end: clamp(3.5rem, 12vw, 12rem);
   }
 
   /*
@@ -153,28 +170,6 @@ const realCount = site.clients.length;
     }
   }
 
-  /*
-   * No motion: stop the scroll and drop the duplicate passes, leaving the real
-   * client list as a plain static row.
-   */
-  @media (prefers-reduced-motion: reduce) {
-    .marquee {
-      overflow: visible;
-      mask-image: none;
-      -webkit-mask-image: none;
-    }
-
-    .marquee__track {
-      animation: none;
-      flex-wrap: wrap;
-      width: auto;
-    }
-
-    .marquee__item[aria-hidden='true'] {
-      display: none;
-    }
-  }
-
   @media (max-width: 34rem) {
     /*
      * Stacked, and the marquee must be told to fill the row. `align-items:
@@ -191,6 +186,41 @@ const realCount = site.clients.length;
 
     .marquee {
       width: 100%;
+    }
+
+    /*
+     * A pass is much narrower here, and since one cycle moves exactly one pass,
+     * the shared 66s would drift at under 6px per second: slow enough to look
+     * broken rather than deliberate. Shortened to hold roughly the same speed
+     * as the desktop strip.
+     */
+    .marquee__track {
+      animation-duration: 38s;
+    }
+  }
+
+  /*
+   * No motion: stop the scroll and drop the duplicate passes, leaving the real
+   * client list as a plain static row.
+   *
+   * Last in the file on purpose. It has to override the width and duration
+   * rules above rather than depend on where they happen to sit.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow: visible;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    .marquee__track {
+      animation: none;
+      flex-wrap: wrap;
+      width: auto;
+    }
+
+    .marquee__item[aria-hidden='true'] {
+      display: none;
     }
   }
 </style>
