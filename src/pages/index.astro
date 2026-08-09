@@ -87,6 +87,7 @@ import { site } from '../data/site';
       </div>
 
       <p class="mono contact__meta">{site.phone} &middot; {site.location}</p>
+      <p class="contact__avail">{site.availability}</p>
     </div>
   </section>
 </Base>
@@ -238,5 +239,13 @@ import { site } from '../data/site';
   .contact__meta {
     margin-top: 1.35rem;
     color: var(--text-400);
+  }
+
+  /* Brighter than the phone and city line above it: this one answers a
+     question the visitor is actually asking before they get in touch. */
+  .contact__avail {
+    margin-top: 0.4rem;
+    font-size: 0.9375rem;
+    color: var(--text-200);
   }
 </style>

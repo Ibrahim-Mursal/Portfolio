@@ -60,6 +60,15 @@ export const site = {
   /** City only. The street on the CV is deliberately not published. */
   location: 'Hawler (Erbil), Iraq',
 
+  /**
+   * Says both things at once, and the split is real rather than aspirational.
+   * A label printer on a counter and a till in a shop need installing and staff
+   * shown how to use them, which is the one thing an overseas freelancer cannot
+   * do. Websites do not. Claiming to be simply worldwide would trade that
+   * advantage, and the local search visibility, for a vaguer promise.
+   */
+  availability: 'On-site for shop software, remote for web work.',
+
   // Deleting an entry removes it from the contact section and the footer.
   links: [
     // Built from the phone number below.
