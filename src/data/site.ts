@@ -59,9 +59,8 @@ export const site = {
   links: [
     // Real, from the phone number on the CV.
     { label: 'WhatsApp', href: 'https://wa.me/9647505998014' },
-    // EDIT ME: both still placeholders. Deleting an entry removes it from the
-    // page and the footer automatically.
-    { label: 'GitHub', href: 'https://github.com/EDIT-ME' },
+    // EDIT ME: still a placeholder. Deleting an entry removes it from the
+    // contact section and the footer automatically.
     { label: 'LinkedIn', href: 'https://linkedin.com/in/EDIT-ME' },
   ],
 
