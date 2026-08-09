@@ -34,7 +34,13 @@ const realCount = site.clients.length;
                  * a lazily loaded logo would scroll into view still blank.
                  * These are a few tens of kilobytes each.
                  */
-                <img class="marquee__logo" src={client.logo} alt={client.name} decoding="async" />
+                <img
+                  class="marquee__logo"
+                  src={client.logo}
+                  alt={client.name}
+                  decoding="async"
+                  style={client.logoHeight ? `--logo-h:${client.logoHeight}` : undefined}
+                />
               ) : (
                 <span class="marquee__name">{client.name}</span>
               )}
@@ -107,15 +113,27 @@ const realCount = site.clients.length;
     flex: none;
     display: flex;
     align-items: center;
-    height: 3.5rem;
+    /* Tall enough for the tallest logo plus a little air. */
+    height: 4.25rem;
     /* Spacing lives here, not in `gap`. See the note at the top of the file. */
     margin-inline-end: clamp(2.25rem, 5vw, 4rem);
   }
 
+  /*
+   * All three logos render white.
+   *
+   * They arrive gold, white and dark purple. The purple measures 2.29:1 on this
+   * background, which is close to invisible, and three unrelated colours in one
+   * row reads as clutter next to a single cyan accent. `brightness(0)` flattens
+   * any colour to black and `invert(1)` lifts it to white, both preserving the
+   * alpha channel, so one rule handles every logo whatever colour it arrives
+   * in. The original artwork is kept unmodified in `public/logos/`.
+   */
   .marquee__logo {
-    height: 3.5rem;
+    height: var(--logo-h, 3.4rem);
     width: auto;
     object-fit: contain;
+    filter: brightness(0) invert(1);
   }
 
   .marquee__name {

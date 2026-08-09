@@ -57,18 +57,21 @@ export const site = {
   /**
    * Companies worked with, shown in the scrolling strip.
    *
-   * `logo` is optional and points at a file in `public/logos/`. Where it is
-   * absent the name renders as a text wordmark instead, which is why two of
-   * these have no logo: I only have the real Sha Perfume artwork. Drop
-   * `public/logos/jir-home.svg` (or .png) in place, add the `logo` line here,
-   * and the strip picks it up. Do not substitute a lookalike mark: an invented
-   * logo misrepresents someone else's company.
+   * `logo` points at a file in `public/logos/`. Without it the name renders as
+   * a text wordmark instead. Never substitute a lookalike mark for a missing
+   * logo: an invented logo misrepresents someone else's company.
+   *
+   * `logoHeight` is set per logo because these three have very different
+   * proportions: Revge is a wide wordmark at 3.1:1, Jir Home is a tall stacked
+   * lockup at 0.77:1. One shared height would render Revge three times the
+   * width of the others and let it dominate the row, so each is sized to look
+   * like equal weight rather than equal height.
    */
   clients: [
-    { name: 'Jir Home' },
-    { name: 'Revge' },
-    { name: 'Sha Perfume', logo: '/logos/sha-perfume.png' },
-  ] as { name: string; logo?: string }[],
+    { name: 'Jir Home', logo: '/logos/jir-home.png', logoHeight: '3.9rem' },
+    { name: 'Revge', logo: '/logos/revge.png', logoHeight: '2rem' },
+    { name: 'Sha Perfume', logo: '/logos/sha-perfume.png', logoHeight: '3.4rem' },
+  ] as { name: string; logo?: string; logoHeight?: string }[],
 
   skills: [
     'C#',

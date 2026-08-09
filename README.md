@@ -33,11 +33,6 @@ Pages or GitHub Pages. No server, no environment variables.
 - [ ] **A social preview image.** No `og:image`, so shared links show no
       thumbnail. Add a 1200x630 image to `public/` and a matching tag in
       `src/layouts/Base.astro`.
-- [ ] **Jir Home and Revge logos.** Only the Sha Perfume artwork was available,
-      so those two render as text wordmarks in the strip. Put the file in
-      `public/logos/`, add a `logo` line to that client in `src/data/site.ts`,
-      and the strip switches to the image. **Do not substitute a lookalike
-      mark** — an invented logo misrepresents someone else's company.
 
 ## Content
 
@@ -77,8 +72,27 @@ Under `prefers-reduced-motion: reduce` the scroll stops and the duplicate passes
 are hidden, leaving the real client list as a plain static row. Hovering pauses
 it.
 
-The Sha Perfume logo is the real artwork with its dark mockup background keyed
-out by luminance, so the gold sits on any background.
+### The logos
+
+All three are the real artwork, kept unmodified in `public/logos/`. The Sha
+Perfume file is its logo with the dark mockup background keyed out by luminance,
+so the gold composites onto any background.
+
+**They render white, by one CSS rule.** They arrive gold, white and dark purple,
+and the purple measures 2.29:1 on this background, which is close to invisible.
+`filter: brightness(0) invert(1)` flattens any colour to black then lifts it to
+white, preserving alpha, so the same rule handles whatever colour a new logo
+arrives in.
+
+**`logoHeight` is per logo, in `src/data/site.ts`.** These three are 0.77:1,
+1.17:1 and 3.1:1. A single shared height would render the wide Revge wordmark
+three times the width of the others and let it dominate the row, so each is
+sized to look like equal weight rather than equal height.
+
+To add a company: drop the file in `public/logos/`, add the entry with a
+`logoHeight`. Without a `logo` the name renders as a text wordmark instead.
+**Never substitute a lookalike mark for a logo you do not have** — an invented
+logo misrepresents someone else's company.
 
 ## Deliberately not here
 
