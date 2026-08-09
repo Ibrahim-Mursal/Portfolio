@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import Clients from '../components/Clients.astro';
 import { site } from '../data/site';
 ---
 
@@ -25,15 +26,7 @@ import { site } from '../data/site';
       </div>
     </div>
 
-    <!-- Companies worked with. Names only. -->
-    <div class="clients">
-      <div class="shell clients__inner">
-        <p class="mono clients__label">Worked with</p>
-        <ul class="clients__list">
-          {site.clients.map((client) => <li>{client}</li>)}
-        </ul>
-      </div>
-    </div>
+    <Clients />
   </section>
 
   <!-- ------------------------------------------------------------- work -->
@@ -146,42 +139,7 @@ import { site } from '../data/site';
     margin-top: 2.25rem;
   }
 
-  /* ------------------------------------------------------------ clients */
-  .clients {
-    position: relative;
-    border-block: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .clients__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 2rem;
-    padding-block: 1.1rem;
-  }
-
-  .clients__label {
-    color: var(--text-400);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.6875rem;
-  }
-
-  .clients__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 2rem;
-    list-style: none;
-    padding: 0;
-  }
-
-  .clients__list li {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.0625rem;
-    color: var(--text-100);
-  }
+  /* The clients strip styles itself, in Clients.astro. */
 
   /* --------------------------------------------------------------- work */
   .grid {

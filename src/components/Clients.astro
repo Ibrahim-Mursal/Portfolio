@@ -1,0 +1,178 @@
+---
+/**
+ * The "worked with" strip, scrolling.
+ *
+ * The track holds the client list repeated REPEATS times and animates by
+ * exactly one repetition (100% / REPEATS), which is what makes the loop
+ * seamless. Spacing is `margin-inline-end` on each item rather than `gap` on
+ * the track: with `gap` the track is one gap narrower than REPEATS whole
+ * repetitions, and the loop visibly jumps once per cycle.
+ *
+ * Only the first pass is exposed to assistive technology. The rest are
+ * duplicates and are hidden, so a screen reader reads three companies, not
+ * twenty four.
+ */
+import { site } from '../data/site';
+
+const REPEATS = 8;
+const items = Array.from({ length: REPEATS }, () => site.clients).flat();
+const realCount = site.clients.length;
+---
+
+<div class="clients">
+  <div class="shell clients__inner">
+    <p class="mono clients__label">Worked with</p>
+
+    <div class="marquee">
+      <ul class="marquee__track" style={`--repeats:${REPEATS}`}>
+        {
+          items.map((client, i) => (
+            <li class="marquee__item" aria-hidden={i >= realCount ? 'true' : undefined}>
+              {client.logo ? (
+                /*
+                 * Not lazy. Most of the track sits outside the clip window, so
+                 * a lazily loaded logo would scroll into view still blank.
+                 * These are a few tens of kilobytes each.
+                 */
+                <img class="marquee__logo" src={client.logo} alt={client.name} decoding="async" />
+              ) : (
+                <span class="marquee__name">{client.name}</span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .clients {
+    position: relative;
+    border-block: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .clients__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem 1.75rem;
+    padding-block: 1rem;
+  }
+
+  .clients__label {
+    flex: none;
+    color: var(--text-400);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.6875rem;
+  }
+
+  .marquee {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    /* Soften both ends so items enter and leave instead of being clipped. */
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 3rem,
+      #000 calc(100% - 3rem),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 3rem,
+      #000 calc(100% - 3rem),
+      transparent 100%
+    );
+  }
+
+  .marquee__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    list-style: none;
+    padding: 0;
+    animation: marquee 42s linear infinite;
+  }
+
+  .marquee:hover .marquee__track,
+  .marquee:focus-within .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__item {
+    flex: none;
+    display: flex;
+    align-items: center;
+    height: 3.5rem;
+    /* Spacing lives here, not in `gap`. See the note at the top of the file. */
+    margin-inline-end: clamp(2.25rem, 5vw, 4rem);
+  }
+
+  .marquee__logo {
+    height: 3.5rem;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .marquee__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    white-space: nowrap;
+    color: var(--text-100);
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% / var(--repeats)));
+    }
+  }
+
+  /*
+   * No motion: stop the scroll and drop the duplicate passes, leaving the real
+   * client list as a plain static row.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow: visible;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    .marquee__track {
+      animation: none;
+      flex-wrap: wrap;
+      width: auto;
+    }
+
+    .marquee__item[aria-hidden='true'] {
+      display: none;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    /*
+     * Stacked, and the marquee must be told to fill the row. `align-items:
+     * flex-start` here lets it size to its own max-content track instead,
+     * which made it 2400px wide inside a 375px viewport. The page did not
+     * scroll sideways only because the body clips overflow, so the break was
+     * invisible until measured.
+     */
+    .clients__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.35rem;
+    }
+
+    .marquee {
+      width: 100%;
+    }
+  }
+</style>

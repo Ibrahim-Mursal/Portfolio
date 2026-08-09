@@ -33,6 +33,11 @@ Pages or GitHub Pages. No server, no environment variables.
 - [ ] **A social preview image.** No `og:image`, so shared links show no
       thumbnail. Add a 1200x630 image to `public/` and a matching tag in
       `src/layouts/Base.astro`.
+- [ ] **Jir Home and Revge logos.** Only the Sha Perfume artwork was available,
+      so those two render as text wordmarks in the strip. Put the file in
+      `public/logos/`, add a `logo` line to that client in `src/data/site.ts`,
+      and the strip switches to the image. **Do not substitute a lookalike
+      mark** — an invented logo misrepresents someone else's company.
 
 ## Content
 
@@ -56,6 +61,24 @@ A contrast pass over every text and background pair reports zero failures
 against WCAG AA. One rule came out of it: **`--text-400` is a floor, not a
 preference.** On the darkest surface a grey has to sit near `#8A8A8A` to clear
 4.5:1 at 11px. Darkening it fails the pass.
+
+## The scrolling client strip
+
+`src/components/Clients.astro`. Two details in it are not cosmetic:
+
+- **Spacing is `margin-inline-end` on the items, not `gap` on the track.** The
+  loop works by animating exactly one repetition (`100% / REPEATS`). With `gap`
+  the track is one gap narrower than REPEATS whole repetitions, so the loop
+  jumps once per cycle.
+- **The logos are not lazy.** Most of the track sits outside the clipping
+  window, so a lazily loaded logo scrolls into view still blank.
+
+Under `prefers-reduced-motion: reduce` the scroll stops and the duplicate passes
+are hidden, leaving the real client list as a plain static row. Hovering pauses
+it.
+
+The Sha Perfume logo is the real artwork with its dark mockup background keyed
+out by luminance, so the gold sits on any background.
 
 ## Deliberately not here
 

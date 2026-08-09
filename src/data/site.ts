@@ -54,8 +54,21 @@ export const site = {
     standing: 'Fourth year',
   },
 
-  /** Companies worked with. Names only. */
-  clients: ['Jir Home', 'Revge', 'Sha Perfume'],
+  /**
+   * Companies worked with, shown in the scrolling strip.
+   *
+   * `logo` is optional and points at a file in `public/logos/`. Where it is
+   * absent the name renders as a text wordmark instead, which is why two of
+   * these have no logo: I only have the real Sha Perfume artwork. Drop
+   * `public/logos/jir-home.svg` (or .png) in place, add the `logo` line here,
+   * and the strip picks it up. Do not substitute a lookalike mark: an invented
+   * logo misrepresents someone else's company.
+   */
+  clients: [
+    { name: 'Jir Home' },
+    { name: 'Revge' },
+    { name: 'Sha Perfume', logo: '/logos/sha-perfume.png' },
+  ] as { name: string; logo?: string }[],
 
   skills: [
     'C#',
