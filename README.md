@@ -27,9 +27,9 @@ Pages or GitHub Pages. No server, no environment variables.
 - [ ] **Domain.** `site` in `astro.config.mjs` is a placeholder that is written
       into every canonical link. Change it, and change `public/robots.txt` to
       match.
-- [ ] **LinkedIn.** In `src/data/site.ts` it still points at `EDIT-ME`. Deleting
-      an entry removes it from the contact section and the footer automatically.
-      WhatsApp is real, built from the phone number.
+Contact details are all real: email, phone, WhatsApp and LinkedIn. Deleting an
+entry from `links` in `src/data/site.ts` removes it from the contact section and
+the footer automatically.
 - [ ] **A social preview image.** No `og:image`, so shared links show no
       thumbnail. Add a 1200x630 image to `public/` and a matching tag in
       `src/layouts/Base.astro`.

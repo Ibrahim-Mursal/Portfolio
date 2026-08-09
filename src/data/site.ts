@@ -1,8 +1,8 @@
 /**
  * All content for the site, in one file.
  *
- * Personal details come from the CV. Anything marked EDIT ME is a placeholder
- * that has to be filled in before this goes public.
+ * Personal details come from the CV and are all real. The one placeholder left
+ * in the project is the domain in astro.config.mjs.
  */
 
 export interface Project {
@@ -56,12 +56,11 @@ export const site = {
   /** City only. The street on the CV is deliberately not published. */
   location: 'Hawler (Erbil), Iraq',
 
+  // Deleting an entry removes it from the contact section and the footer.
   links: [
-    // Real, from the phone number on the CV.
+    // Built from the phone number below.
     { label: 'WhatsApp', href: 'https://wa.me/9647505998014' },
-    // EDIT ME: still a placeholder. Deleting an entry removes it from the
-    // contact section and the footer automatically.
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/EDIT-ME' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ibrahim-mursal-142b5a368/' },
   ],
 
   education: {
