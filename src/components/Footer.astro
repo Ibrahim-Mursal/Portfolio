@@ -8,19 +8,6 @@ const year = new Date().getFullYear();
   <div class="shell site-foot__inner">
     <p class="site-foot__name">{site.name}</p>
 
-    <ul class="site-foot__links">
-      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-      {
-        site.links.map((link) => (
-          <li>
-            <a href={link.href} rel="noopener">
-              {link.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
     <p class="mono site-foot__meta">&copy; {year} &middot; All rights reserved</p>
   </div>
 </footer>
@@ -45,24 +32,6 @@ const year = new Date().getFullYear();
     font-weight: 700;
     font-size: 0.9375rem;
     color: var(--text-100);
-  }
-
-  .site-foot__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.25rem;
-    list-style: none;
-    padding: 0;
-  }
-
-  .site-foot__links a {
-    font-size: 0.875rem;
-    text-decoration: none;
-    color: var(--text-300);
-  }
-
-  .site-foot__links a:hover {
-    color: var(--cyan-400);
   }
 
   .site-foot__meta {

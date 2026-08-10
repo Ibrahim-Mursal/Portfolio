@@ -68,8 +68,8 @@ There are no per-project pages. Four projects with three points each says more
 than four pages nobody opens.
 
 Contact details are real: email, phone, WhatsApp and LinkedIn. Deleting an entry
-from `links` in `src/data/site.ts` removes it from the contact section and the
-footer automatically.
+from `links` in `src/data/site.ts` removes it from the contact section
+automatically. The footer carries no links, only the name and copyright.
 
 ## Content rules
 
@@ -88,8 +88,8 @@ is a computer engineering portfolio.
 
 Near-black canvas, electric cyan `#2DD4EF` as the single functional accent. Cyan
 on `#080B0F` clears roughly 11:1, so it carries text, borders and fills with no
-contrast exception anywhere. Violet appears only inside the hero glow, never as
-text or a border, and nothing depends on seeing it.
+contrast exception anywhere. The hero has no background glow or gradient; the
+canvas is flat.
 
 Type is Space Grotesk for display, Inter for body, JetBrains Mono for small
 labels, all self-hosted through `@fontsource` so no request leaves the origin.

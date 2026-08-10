@@ -99,21 +99,6 @@ import { site } from '../data/site';
     overflow: hidden;
   }
 
-  /*
-   * Two glows behind the hero, cyan over violet. The only place violet appears,
-   * and it is purely light: nothing depends on seeing it.
-   */
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: -12rem -20% auto -20%;
-    height: 42rem;
-    background:
-      radial-gradient(38% 44% at 28% 42%, var(--cyan-glow) 0%, transparent 72%),
-      radial-gradient(34% 40% at 68% 30%, var(--violet-glow) 0%, transparent 72%);
-    pointer-events: none;
-  }
-
   .hero__inner {
     position: relative;
     padding-block: clamp(3.5rem, 10vw, 6.5rem) clamp(2.75rem, 7vw, 4.5rem);

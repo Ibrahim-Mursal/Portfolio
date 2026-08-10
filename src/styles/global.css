@@ -4,9 +4,6 @@
  * Near-black canvas, electric cyan as the one functional accent. Cyan on
  * #080b0f clears roughly 11:1, so it can carry text, borders and fills with no
  * contrast exception anywhere.
- *
- * Violet appears only inside the hero glow. It is never text, never a border
- * and never the only signal for anything.
  */
 
 :root {
@@ -31,7 +28,6 @@
   --cyan-400: #2dd4ef;
   --cyan-500: #12b5d4;
   --cyan-glow: rgba(45, 212, 239, 0.14);
-  --violet-glow: rgba(124, 92, 255, 0.16);
 
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.17);
