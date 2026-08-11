@@ -36,7 +36,7 @@ export const site = {
    * two parts rather than one string because the hero needs the break point,
    * and kept here rather than hardcoded in the page so there is one copy of it.
    */
-  pitch: { lead: 'We make your job', accent: 'easier and faster' },
+  pitch: { lead: 'I make your job', accent: 'easier and faster' },
 
   /**
    * Search-result and link-preview text. Separate from `intro` because that one
