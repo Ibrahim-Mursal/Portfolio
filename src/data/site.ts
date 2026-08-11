@@ -70,7 +70,7 @@ export const site = {
   links: [
     // Built from the phone number below.
     { label: 'WhatsApp', href: 'https://wa.me/9647505998014' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ibrahim-mursal-142b5a368/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ibrahim-mursal/' },
   ],
 
   education: {
