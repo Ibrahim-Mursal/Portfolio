@@ -14,9 +14,12 @@ const year = new Date().getFullYear();
 
 <style>
   .site-foot {
-    border-top: 1px solid var(--border);
-    background: var(--bg-deep);
+    border-top: 1px solid var(--on-ink-rule-strong);
+    background: var(--ink-bg);
     padding-block: 1.85rem 2.25rem;
+    /* Matches the header bookend — see the comment there. */
+    --ink: var(--paper);
+    --ink-400: var(--on-ink-400);
   }
 
   .site-foot__inner {
@@ -29,12 +32,12 @@ const year = new Date().getFullYear();
 
   .site-foot__name {
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.9375rem;
-    color: var(--text-100);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
   }
 
   .site-foot__meta {
-    color: var(--text-400);
+    color: var(--ink-400);
   }
 </style>

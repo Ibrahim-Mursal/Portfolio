@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-08T18:05:00.000Z",
+  "title": "Design System: Ibrahim Mursal — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "green": {
+        "role": "primary",
+        "displayName": "Datasheet Green",
+        "canonical": "#0f6b3a",
+        "tonalRamp": ["#094324", "#127d44", "#19b361", "#28e17f", "#5ee89f", "#94f0bf", "#c0f6da", "#e9fcf2"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Graphite Ink",
+        "canonical": "#1a1a18",
+        "tonalRamp": ["#282825", "#4a4a45", "#6a6a62", "#898980", "#a7a7a0", "#c4c4bf", "#ddddda", "#f3f3f2"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Bone-White Paper",
+        "canonical": "#f7f6f2",
+        "tonalRamp": ["#2f2c1d", "#585236", "#7e754e", "#a29667", "#b9b08d", "#d0cbb3", "#e4e0d3", "#f5f4ef"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline, section headings, project names — Inter, deliberately quiet/neutral, not a strong-personality display face." },
+      "body": { "displayName": "Body", "purpose": "Running copy: hero sub, project summaries, About intro." },
+      "label": { "displayName": "Label / Mono", "purpose": "Table keys and values, stamps, signatures — real data only, never a costume." }
+    },
+    "shadows": [
+      { "name": "entry-hover", "value": "0 10px 26px -18px rgba(26,26,24,0.5)", "purpose": "The only shadow in the system; lifts a project entry on hover." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Scroll-reveal and hover transitions — a calm exponential ease-out." }
+    ],
+    "breakpoints": [
+      { "name": "nav-collapse", "value": "30rem" },
+      { "name": "card-head-wrap", "value": "26rem" },
+      { "name": "about-two-col", "value": "58rem" },
+      { "name": "hero-two-col", "value": "56rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call to action (Get in touch). Sharp corners, mono label, not a pill.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#contact\">Get in touch</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.85rem 1.5rem; border-radius: 3px; font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.02em; text-decoration: none; border: 1.5px solid #0f6b3a; background: #0f6b3a; color: #f7f6f2; transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), background 0.18s; } .ds-btn-primary:hover { background: #0a4f2b; border-color: #0a4f2b; transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 2px solid #0f6b3a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action (See the work). Transparent, hairline border.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#work\">See the work</a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.85rem 1.5rem; border-radius: 3px; font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.02em; text-decoration: none; border: 1.5px solid rgba(26,26,24,0.3); color: #1a1a18; background: transparent; transition: color 0.18s, border-color 0.18s, transform 0.18s; } .ds-btn-ghost:hover { border-color: #0f6b3a; color: #0a4f2b; transform: translateY(-2px); }"
+    },
+    {
+      "name": "Status Stamp",
+      "kind": "chip",
+      "refersTo": "stamp-live",
+      "description": "The signature component: a tilted, bordered status mark, mono uppercase. The live variant fills green-tint for real in-use status.",
+      "html": "<span class=\"ds-stamp ds-stamp-live\">In daily use</span>",
+      "css": ".ds-stamp { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.65rem; border: 1.5px solid rgba(26,26,24,0.3); border-radius: 3px; color: #55534c; white-space: nowrap; transform: rotate(-1.5deg); } .ds-stamp-live { color: #0a4f2b; border-color: #0f6b3a; background: #ddeee2; }"
+    },
+    {
+      "name": "Datasheet Row",
+      "kind": "custom",
+      "refersTo": "datasheet-row",
+      "description": "The recurring dt/dd fact-value row used for passive, read-only facts: the quick-specs box and the Studying param box. Not used for Contact — that section uses real buttons instead (see Primary/Ghost Button).",
+      "html": "<div class=\"ds-row\"><dt>Location</dt><dd>Hawler (Erbil), Iraq</dd></div>",
+      "css": ".ds-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.7rem 1.15rem; border-top: 1px solid rgba(26,26,24,0.14); font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; } .ds-row dt { color: #6b6a62; flex: none; } .ds-row dd { color: #1a1a18; text-align: right; font-variant-numeric: tabular-nums; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Component Datasheet",
+    "overview": "The portfolio reads as a manufacturer's datasheet for a person, not a SaaS landing page: bone-white paper, graphite ink, one deep-green accent spent only on status, rules, and active state. Every claim is a measured spec, never a pitch — a boxed \"quick specs\" table beside the pitch, each project as a spec entry with a status stamp. Contact is the deliberate exception: real buttons in a wrapping row, not a data table — it was first built as a dt/dd \"ordering information\" panel and reverted after feedback that a table read as cold for the one section whose job is to invite a message. This replaced an earlier near-black canvas with a single neon-cyan accent, glass cards, and a gradient hero glow. The system went through several rounds of direct user taste correction after the first build: the palette was deepened once for reading too pale, then the accent hue (cobalt blue to deep green) and the display typeface (Big Shoulders Display to plain Inter) were both replaced outright on explicit feedback, and section-number prefixes, a revision tag, a skills chip list, and per-project stack chips were all built and then removed on request. Treat the values recorded here as the settled state.",
+    "keyCharacteristics": [
+      "One ink color (graphite) plus one accent (deep green) — no gradients, no glass, no second competing hue.",
+      "Hairline rules build every structure: a boxed table, a ruled list, a bordered panel.",
+      "Status reads as a stamp (bordered, mono, tilted −1.5°), not a colored pill.",
+      "Every project entry carries a small signed mark (initials), never an invented date.",
+      "Headings and body both use plain, neutral sans faces — no display face with a strong personality; that was tried and rejected."
+    ],
+    "rules": [
+      { "name": "The One Ink Rule", "body": "Every color on the page is a step on the ink scale or the green accent. A third hue never appears — client logos are flattened to ink via filter: brightness(0) specifically so a gold or purple logo can't introduce a competing color.", "section": "colors" },
+      { "name": "The Quiet Floor Rule", "body": "ink-large-only (3.3:1) is for large or decorative use only. Any label under ~18px uses at minimum ink-quiet (5.0:1) on plain paper, or ink-body (5.8:1+) on the deeper paper-deep surface — a real bug caught twice during build and now the standing rule.", "section": "colors" },
+      { "name": "The Ink Bookend Rule", "body": "The header and footer are solid #1a1a18 ink, not paper — the page's one deliberate dark note, added to answer \"too pale\". Every token used inside them is locally redefined to a light-on-dark equivalent right on the section selector, so every existing component rule adapts automatically.", "section": "colors" },
+      { "name": "The Data Is Mono Rule", "body": "Monospace only ever wraps something that is actually data, a label, or a measured value. It never dresses up a sentence to look \"technical.\"", "section": "typography" },
+      { "name": "The Quiet Display Rule", "body": "The display face carries weight and size, never personality. A condensed/industrial/display-serif headline face was tried once and reversed on direct feedback.", "section": "typography" },
+      { "name": "The Flat Paper Rule", "body": "Nothing casts a shadow at rest. Depth appears only as a response to hover, never as ambient decoration under a static card.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the green accent to status, active state, rules, and links — if a screen has more than one thing \"shouting\" green at once, something is wrong.",
+      "Do use the dt/dd hairline-row pattern for passive, read-only facts (quick specs, the Studying box) — but use real buttons instead when the list is something a visitor should act on, as with Contact.",
+      "Do keep every project's status stamp a claim that is actually true (real \"in use\" / \"in daily use\" state) — the stamp motif only works because it is never decorative.",
+      "Do keep both display and body type quiet and neutral — a direct, explicit user correction, not a style option to reconsider later."
+    ],
+    "donts": [
+      "Don't use ink-large-only (#8a887f) on anything under ~18px or non-bold, and don't use ink-quiet on the deepened paper-deep surface — both fail the 4.5:1 floor there; use ink-body on that surface instead.",
+      "Don't add a second accent color, a gradient, or a glass/blur surface — the whole system's discipline is one ink scale plus one accent.",
+      "Don't round a button into a pill or a card into a soft blob — corners stay at the system's single sharp 3px.",
+      "Don't put a colored border-left accent stripe on a card or panel — info boxes get a full hairline border on all sides instead.",
+      "Don't invent a project's date or timeline for the signature mark — it carries initials only, never a fabricated timestamp.",
+      "Don't reintroduce a bold/condensed/industrial display face, a blue accent, section-number prefixes (§01), a revision tag (\"REV 2026\"), the skills chip list, per-project stack chips, or a dt/dd table for Contact — all six were built, then explicitly removed on user feedback. Re-adding any of them needs a fresh ask."
+    ]
+  }
+}

@@ -5,8 +5,8 @@ import Base from '../layouts/Base.astro';
 <Base title="Page not found" description="That page does not exist." noindex>
   <section class="notfound">
     <div class="shell">
-      <p class="eyebrow">404</p>
-      <h1 class="notfound__title">Nothing here.</h1>
+      <div class="notfound__stamp mono" aria-hidden="true">NOT FOUND</div>
+      <h1 class="notfound__title">404</h1>
       <p class="lede">That address does not exist.</p>
 
       <a class="btn btn--primary notfound__btn" href="/">
@@ -21,9 +21,22 @@ import Base from '../layouts/Base.astro';
     padding-block: clamp(3.5rem, 10vw, 7rem);
   }
 
+  .notfound__stamp {
+    display: inline-block;
+    border: 1.5px solid var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--ink-400);
+    transform: rotate(-2deg);
+  }
+
   .notfound__title {
-    margin-top: 0.9rem;
-    font-size: clamp(2.25rem, 8vw, 4rem);
+    margin-top: 1rem;
+    font-size: clamp(3.5rem, 14vw, 6rem);
+    color: var(--green);
   }
 
   .notfound__btn {

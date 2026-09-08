@@ -4,15 +4,15 @@ import { site } from '../data/site';
 
 <header class="site-head">
   <div class="shell site-head__inner">
-    <a class="wordmark" href="/">
-      <span class="wordmark__dot" aria-hidden="true"></span>
-      <span>{site.name}</span>
+    <a class="doc-code" href="/">
+      <span class="doc-code__doc">PORTFOLIO</span>
     </a>
 
     <nav aria-label="Primary">
       <a href="/#work">Work</a>
       <a href="/#about">About</a>
-      <a class="nav__cta" href="/#contact">Contact</a>
+      <a href="/#contact">Contact</a>
+      <a class="stamp nav__cta" href="/#contact">Get in touch</a>
     </nav>
   </div>
 </header>
@@ -22,9 +22,20 @@ import { site } from '../data/site';
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(8, 11, 15, 0.85);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
+    background: var(--ink-bg);
+    border-bottom: 1px solid var(--on-ink-rule-strong);
+    /*
+     * Every rule below still reads --ink-500, --green, --rule-strong etc:
+     * redefining them here flips the whole subtree to the dark bookend
+     * without touching a single downstream color.
+     */
+    --ink: var(--paper);
+    --ink-500: var(--on-ink-500);
+    --ink-400: var(--on-ink-400);
+    --green: var(--on-ink-green);
+    --green-700: var(--on-ink-green-700);
+    --rule: var(--on-ink-rule);
+    --rule-strong: var(--on-ink-rule-strong);
   }
 
   .site-head__inner {
@@ -35,56 +46,50 @@ import { site } from '../data/site';
     min-height: 3.75rem;
   }
 
-  .wordmark {
+  .doc-code {
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.55rem;
     text-decoration: none;
-    color: var(--text-100);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.9375rem;
+    color: var(--ink);
   }
 
-  .wordmark__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--cyan-400);
-    flex: none;
+  .doc-code__doc {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: 0.01em;
   }
 
   nav {
     display: flex;
     align-items: center;
-    gap: clamp(0.9rem, 3vw, 1.75rem);
+    gap: clamp(1rem, 3vw, 1.75rem);
   }
 
   nav a {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--text-300);
+    color: var(--ink-500);
     text-decoration: none;
   }
 
   nav a:hover {
-    color: var(--text-100);
+    color: var(--ink);
   }
 
   .nav__cta {
-    border: 1px solid var(--border-strong);
-    border-radius: 999px;
-    padding: 0.4rem 0.95rem;
-    color: var(--text-100);
+    color: var(--ink);
+    transform: none;
   }
 
   .nav__cta:hover {
-    border-color: var(--cyan-400);
-    color: var(--cyan-400);
+    border-color: var(--green);
+    color: var(--green-700);
   }
 
-  @media (max-width: 26rem) {
-    .nav__cta {
+  @media (max-width: 30rem) {
+    nav a:not(.nav__cta) {
       display: none;
     }
   }

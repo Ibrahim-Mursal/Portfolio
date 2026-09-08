@@ -3,27 +3,39 @@ import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Clients from '../components/Clients.astro';
 import { site } from '../data/site';
+
+const telHref = `tel:${site.phone.replace(/[^+\d]/g, '')}`;
 ---
 
 <Base title={site.name} description={site.metaDescription}>
   <!-- ------------------------------------------------------------- hero -->
   <section class="hero">
     <div class="shell hero__inner">
-      <p class="eyebrow">{site.name}</p>
+      <div class="hero__main">
+        <h1 class="hero__title">
+          {site.pitch.lead}<br /><span class="hi">{site.pitch.accent}</span>.
+        </h1>
 
-      <h1 class="hero__title">
-        {site.pitch.lead}<br /><span class="hi">{site.pitch.accent}</span>.
-      </h1>
+        <p class="hero__sub">
+          {site.role}. I build the software that takes the slow part of your day and removes
+          it.
+        </p>
 
-      <p class="hero__sub">
-        {site.role}. I build the software that takes the slow part of your day and removes
-        it.
-      </p>
-
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="#contact">Get in touch</a>
-        <a class="btn btn--ghost" href="#work">See the work</a>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#contact">Get in touch</a>
+          <a class="btn btn--ghost" href="#work">See the work</a>
+        </div>
       </div>
+
+      <aside class="specs mono" aria-label="Quick specs">
+        <p class="specs__label">Quick specs</p>
+        <dl class="specs__rows">
+          <div><dt>Role</dt><dd>{site.role}</dd></div>
+          <div><dt>Location</dt><dd>{site.location}</dd></div>
+          <div><dt>Availability</dt><dd>{site.availability}</dd></div>
+          <div><dt>Languages</dt><dd>{site.languages.join(', ')}</dd></div>
+        </dl>
+      </aside>
     </div>
 
     <Clients />
@@ -32,8 +44,8 @@ import { site } from '../data/site';
   <!-- ------------------------------------------------------------- work -->
   <section class="section" id="work">
     <div class="shell">
-      <p class="eyebrow">Work</p>
-      <h2 class="section-title">Four things, all in use.</h2>
+      <h2 class="doc-heading">Work</h2>
+      <p class="lede">Four things, all in use.</p>
 
       <div class="grid">
         {site.projects.map((project, i) => <ProjectCard project={project} index={i} />)}
@@ -45,26 +57,15 @@ import { site } from '../data/site';
   <section class="section section--edge" id="about">
     <div class="shell about">
       <div>
-        <p class="eyebrow">About</p>
+        <h2 class="doc-heading">About</h2>
         <p class="about__intro">{site.intro}</p>
-
-        <ul class="chips about__skills">
-          {site.skills.map((skill) => <li>{skill}</li>)}
-        </ul>
       </div>
 
-      <aside class="about__side">
-        <div class="panel">
-          <p class="mono panel__label">Studying</p>
-          <p class="panel__lead">{site.education.school}</p>
-          <p class="panel__sub">{site.education.field}</p>
-          <p class="panel__sub">{site.education.standing}, {site.education.period}</p>
-        </div>
-
-        <div class="panel">
-          <p class="mono panel__label">Languages</p>
-          <p class="panel__lead">{site.languages.join(', ')}</p>
-        </div>
+      <aside class="param-box about__side">
+        <p class="mono param-box__label">Studying</p>
+        <p class="param-box__lead">{site.education.school}</p>
+        <p class="param-box__sub">{site.education.field}</p>
+        <p class="param-box__sub">{site.education.standing}, {site.education.period}</p>
       </aside>
     </div>
   </section>
@@ -72,11 +73,12 @@ import { site } from '../data/site';
   <!-- ---------------------------------------------------------- contact -->
   <section class="section contact" id="contact">
     <div class="shell">
-      <p class="eyebrow">Contact</p>
-      <h2 class="contact__title">Tell me what is slowing you down.</h2>
+      <h2 class="doc-heading">Contact</h2>
+      <p class="lede">Tell me what is slowing you down.</p>
 
       <div class="contact__actions">
         <a class="btn btn--primary" href={`mailto:${site.email}`}>{site.email}</a>
+        <a class="btn btn--ghost" href={telHref}>{site.phone}</a>
         {
           site.links.map((link) => (
             <a class="btn btn--ghost" href={link.href} rel="noopener">
@@ -86,46 +88,87 @@ import { site } from '../data/site';
         }
       </div>
 
-      <p class="mono contact__meta">{site.phone} &middot; {site.location}</p>
-      <p class="contact__avail">{site.availability}</p>
+      <p class="mono contact__meta">{site.location} &middot; {site.availability}</p>
     </div>
   </section>
 </Base>
 
 <style>
   /* --------------------------------------------------------------- hero */
-  .hero {
-    position: relative;
-    overflow: hidden;
+  .hero__inner {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+    padding-block: clamp(3rem, 9vw, 5.5rem) clamp(2.5rem, 6vw, 4rem);
   }
 
-  .hero__inner {
-    position: relative;
-    padding-block: clamp(3.5rem, 10vw, 6.5rem) clamp(2.75rem, 7vw, 4.5rem);
+  @media (min-width: 56rem) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr) 19rem;
+      align-items: start;
+    }
   }
 
   .hero__title {
-    margin-top: 1.25rem;
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    line-height: 1.02;
-    letter-spacing: -0.04em;
+    font-size: clamp(2.75rem, 8vw, 5.25rem);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
   }
 
   .hero__sub {
-    margin-top: 1.5rem;
-    max-width: 44ch;
+    margin-top: 1.4rem;
+    max-width: 42ch;
     font-size: clamp(1.0625rem, 2vw, 1.25rem);
-    color: var(--text-300);
+    color: var(--ink-500);
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.7rem;
-    margin-top: 2.25rem;
+    margin-top: 2.1rem;
   }
 
-  /* The clients strip styles itself, in Clients.astro. */
+  /* The client strip styles itself, in Clients.astro. */
+
+  /* ------------------------------------------------------------- specs */
+  .specs {
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    background: var(--paper-deep);
+    padding: 1rem 1.15rem 1.2rem;
+  }
+
+  .specs__label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.6875rem;
+    color: var(--ink-500);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .specs__rows {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .specs__rows > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .specs__rows dt {
+    color: var(--ink-500);
+  }
+
+  .specs__rows dd {
+    color: var(--ink);
+    text-align: right;
+  }
 
   /* --------------------------------------------------------------- work */
   .grid {
@@ -158,60 +201,48 @@ import { site } from '../data/site';
     max-width: 32ch;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(1.3rem, 2.8vw, 1.85rem);
-    line-height: 1.32;
-    letter-spacing: -0.015em;
-    color: var(--text-100);
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--ink);
   }
 
-  .about__skills {
-    margin-top: 1.5rem;
-  }
-
-  .about__side {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-width: 0;
-  }
-
-  .panel {
-    border: 1px solid var(--border);
-    border-left: 2px solid var(--cyan-500);
+  .param-box {
+    border: 1px solid var(--rule-strong);
     border-radius: var(--radius);
-    background: var(--surface);
+    background: var(--paper-deep);
     padding: 1.1rem 1.25rem 1.25rem;
+    align-self: start;
   }
 
-  .panel__label {
-    color: var(--cyan-400);
+  .param-box__label {
+    color: var(--green);
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-size: 0.6875rem;
   }
 
-  .panel__lead {
+  .param-box__lead {
     margin-top: 0.55rem;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1.0625rem;
-    color: var(--text-100);
+    font-size: 1.125rem;
+    color: var(--ink);
   }
 
-  .panel__sub {
+  .param-box__sub {
     font-size: 0.875rem;
-    color: var(--text-400);
+    color: var(--ink-500);
   }
 
   /* ------------------------------------------------------------ contact */
   .contact {
-    border-top: 1px solid var(--border);
-    background: var(--bg-deep);
+    border-top: 1px solid var(--rule);
+    background: var(--paper-deep);
   }
 
-  .contact__title {
-    margin-top: 0.9rem;
-    font-size: clamp(1.85rem, 5.5vw, 3rem);
+  .contact .doc-heading {
+    color: var(--ink);
   }
 
   .contact__actions {
@@ -223,14 +254,6 @@ import { site } from '../data/site';
 
   .contact__meta {
     margin-top: 1.35rem;
-    color: var(--text-400);
-  }
-
-  /* Brighter than the phone and city line above it: this one answers a
-     question the visitor is actually asking before they get in touch. */
-  .contact__avail {
-    margin-top: 0.4rem;
-    font-size: 0.9375rem;
-    color: var(--text-200);
+    color: var(--ink-500);
   }
 </style>

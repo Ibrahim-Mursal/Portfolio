@@ -1,7 +1,8 @@
 ---
 /**
- * A project, whole. There are no separate case-study pages: four projects with
- * three points each says more than four pages nobody opens.
+ * A project, whole, styled as one entry in a component datasheet. There are
+ * no separate case-study pages: four projects with three points each says
+ * more than four pages nobody opens.
  */
 import type { Project } from '../data/site';
 
@@ -12,19 +13,26 @@ interface Props {
 
 const { project, index = 0 } = Astro.props;
 
-const stroke = 'rgba(45, 212, 239, 0.9)';
-const faint = 'rgba(255, 255, 255, 0.16)';
+const stroke = 'var(--green)';
+const faint = 'var(--rule-strong)';
+
+/** Two-letter maker's mark: authorship on every entry, no invented date. */
+const clientInitials = project.client
+  .split(' ')
+  .map((word) => word[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
 ---
 
-<article class="card reveal" style={`--reveal-delay:${Math.min(index, 4) * 70}ms`}>
-  <div class="card__head">
-    <!-- A small drawn mark, one per project. Decorative. -->
-    <div class="card__mark" aria-hidden="true">
+<article class="entry reveal" style={`--reveal-delay:${Math.min(index, 4) * 70}ms`}>
+  <div class="entry__head">
+    <div class="entry__mark" aria-hidden="true">
       <svg viewBox="0 0 48 48" role="presentation">
         {
           project.mark === 'label' && (
             <g fill="none" stroke-width="2">
-              <rect x="6" y="13" width="36" height="22" rx="3" stroke={stroke} />
+              <rect x="6" y="13" width="36" height="22" rx="2" stroke={stroke} />
               <line x1="12" y1="21" x2="28" y2="21" stroke={stroke} />
               <line x1="12" y1="27" x2="22" y2="27" stroke={faint} />
               <line x1="6" y1="9" x2="42" y2="9" stroke={faint} />
@@ -54,8 +62,8 @@ const faint = 'rgba(255, 255, 255, 0.16)';
         {
           project.mark === 'till' && (
             <g fill="none" stroke-width="2">
-              <rect x="7" y="20" width="34" height="18" rx="3" stroke={stroke} />
-              <rect x="14" y="9" width="20" height="11" rx="2" stroke={faint} />
+              <rect x="7" y="20" width="34" height="18" rx="2" stroke={stroke} />
+              <rect x="14" y="9" width="20" height="11" rx="1" stroke={faint} />
               <line x1="14" y1="28" x2="24" y2="28" stroke={stroke} />
               <line x1="28" y1="28" x2="34" y2="28" stroke={faint} />
             </g>
@@ -64,116 +72,136 @@ const faint = 'rgba(255, 255, 255, 0.16)';
       </svg>
     </div>
 
-    <div class="card__titles">
-      <p class="mono card__client">{project.client} &middot; {project.kind}</p>
-      <h3 class="card__name">{project.name}</h3>
+    <div class="entry__titles">
+      <p class="mono entry__client">{project.client} &middot; {project.kind}</p>
+      <h3 class="entry__name">{project.name}</h3>
     </div>
 
-    <span class="badge" class:list={[{ 'badge--live': project.inUse }]}>{project.status}</span>
+    <span class="stamp" class:list={[{ 'stamp--live': project.inUse }]}>{project.status}</span>
   </div>
 
-  <p class="card__summary">{project.summary}</p>
+  <p class="entry__summary">{project.summary}</p>
 
-  <ul class="card__points">
-    {project.points.map((point) => <li>{point}</li>)}
-  </ul>
+  <ol class="entry__points">
+    {project.points.map((point, i) => (
+      <li>
+        <span class="mono entry__points-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        {point}
+      </li>
+    ))}
+  </ol>
 
-  <ul class="chips chips--mono card__stack">
-    {project.stack.map((tech) => <li>{tech}</li>)}
-  </ul>
+  <p
+    class="mono entry__signature"
+    title={`Built by ${clientInitials === 'IM' ? 'Ibrahim Mursal' : `Ibrahim Mursal for ${project.client}`}`}
+  >
+    I.M. &middot; {clientInitials}
+  </p>
 </article>
 
 <style>
-  .card {
+  .entry {
     display: flex;
     flex-direction: column;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--paper);
+    border: 1px solid var(--rule-strong);
     border-radius: var(--radius);
     padding: 1.4rem 1.5rem 1.5rem;
-    transition: border-color 0.22s var(--ease), background 0.22s var(--ease);
+    transition: box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
   }
 
-  .card:hover {
-    border-color: rgba(45, 212, 239, 0.4);
-    background: var(--surface-2);
+  .entry:hover {
+    border-color: var(--ink-300);
+    box-shadow: 0 10px 26px -18px rgba(26, 26, 24, 0.5);
   }
 
-  .card__head {
+  .entry:hover .stamp--live {
+    transform: rotate(-1.5deg) scale(1.05);
+  }
+
+  .entry__head {
     display: flex;
     align-items: flex-start;
     gap: 0.9rem;
   }
 
-  .card__mark {
+  .entry__mark {
     flex: none;
     width: 2.75rem;
     height: 2.75rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--bg);
+    border: 1px solid var(--rule-strong);
+    border-radius: 2px;
+    background: var(--paper-deep);
     padding: 0.35rem;
   }
 
-  .card__titles {
+  .entry__titles {
     flex: 1;
     min-width: 0;
   }
 
-  .card__client {
-    color: var(--text-400);
+  .entry__client {
+    color: var(--ink-400);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 0.6875rem;
   }
 
-  .card__name {
-    font-size: 1.375rem;
+  .entry__name {
+    font-size: 1.5rem;
     margin-top: 0.15rem;
   }
 
-  .card__summary {
+  .entry__summary {
     margin-top: 1rem;
     font-size: 0.9375rem;
-    color: var(--text-300);
+    color: var(--ink-500);
   }
 
-  .card__points {
+  .entry__points {
     list-style: none;
     padding: 0;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.85rem;
   }
 
-  .card__points li {
-    position: relative;
-    padding-left: 1.25rem;
+  .entry__points li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
     font-size: 0.9375rem;
-    color: var(--text-200);
+    color: var(--ink-700);
   }
 
-  .card__points li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.6em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--cyan-400);
+  .entry__points-num {
+    flex: none;
+    color: var(--green);
+    font-size: 0.6875rem;
+    font-weight: 600;
   }
 
-  .card__stack {
+  .entry__signature {
     margin-top: auto;
     padding-top: 1.35rem;
+    color: var(--ink-400);
+    letter-spacing: 0.04em;
+    text-align: right;
   }
 
   @media (max-width: 26rem) {
-    /* The badge and the title fight for room on a narrow phone. */
-    .card__head {
+    /* The stamp and the title fight for room on a narrow phone. */
+    .entry__head {
       flex-wrap: wrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .entry:hover .stamp--live {
+      transform: none;
     }
   }
 </style>
