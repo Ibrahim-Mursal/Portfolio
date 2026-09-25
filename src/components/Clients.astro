@@ -9,8 +9,8 @@
  * repetitions, and the loop visibly jumps once per cycle.
  *
  * Only the first pass is exposed to assistive technology. The rest are
- * duplicates and are hidden, so a screen reader reads three companies, not
- * twenty four.
+ * duplicates and are hidden, so a screen reader reads each company once, not
+ * once per repeat.
  */
 import { site } from '../data/site';
 
@@ -112,7 +112,7 @@ const realCount = site.clients.length;
      * 1.7x wider than it was, and the duration is raised in step to keep the
      * drift at the same calm rate rather than letting it speed up.
      */
-    animation: marquee 66s linear infinite;
+    animation: marquee 88s linear infinite;
   }
 
   .marquee:hover .marquee__track,
@@ -137,7 +137,7 @@ const realCount = site.clients.length;
   }
 
   /*
-   * All three logos render as flat graphite ink, matching the page's one-ink
+   * Every logo renders as flat graphite ink, matching the page's one-ink
    * datasheet world.
    *
    * They arrive gold, white and dark purple. On this paper ground a white
@@ -197,7 +197,7 @@ const realCount = site.clients.length;
      * as the desktop strip.
      */
     .marquee__track {
-      animation-duration: 38s;
+      animation-duration: 51s;
     }
   }
 

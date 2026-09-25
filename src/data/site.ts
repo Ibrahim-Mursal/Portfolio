@@ -97,6 +97,7 @@ export const site = {
     { name: 'Jir Home', logo: '/logos/jir-home.png', logoHeight: '3.9rem' },
     { name: 'Revge', logo: '/logos/revge.png', logoHeight: '2rem' },
     { name: 'Sha Perfume', logo: '/logos/sha-perfume.png', logoHeight: '3.4rem' },
+    { name: 'Maisoura', logo: '/logos/maisoura.png', logoHeight: '2.6rem' },
   ] as { name: string; logo?: string; logoHeight?: string }[],
 
   skills: [

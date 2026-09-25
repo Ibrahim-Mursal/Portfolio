@@ -44,7 +44,7 @@ Not a student with class projects or tutorial clones — four pieces of software
 ## Evidence on Hand
 
 - Four real, shipped, in-use projects with real client names, one-line summaries, three user-facing points each, and tech stack, in `src/data/site.ts`.
-- Three real client/company logos in `public/logos/` (Jir Home, Revge, Sha Perfume) for the "worked with" strip.
+- Four real client/company logos in `public/logos/` (Jir Home, Revge, Sha Perfume, Maisoura) for the "worked with" strip. The Maisoura file is the client's logo with its patterned JPEG background keyed out to transparency by redness, so only the red lettering remains.
 - No testimonials, press, or case-study detail exist beyond what's in `site.ts` — future work must not invent any.
 
 ## Product Principles
