@@ -108,11 +108,11 @@ const realCount = site.clients.length;
     padding: 0;
     /*
      * One cycle moves exactly one pass, so the on-screen speed is
-     * (pass width / duration). The wide spacing below makes a pass roughly
-     * 1.7x wider than it was, and the duration is raised in step to keep the
-     * drift at the same calm rate rather than letting it speed up.
+     * (pass width / duration). The duration scales with the number of logos:
+     * about 14px per second is the target, so a pass of ~1140px (five logos at
+     * a 1280px window) takes 80s. Retime it whenever a logo is added or removed.
      */
-    animation: marquee 110s linear infinite;
+    animation: marquee 80s linear infinite;
   }
 
   .marquee:hover .marquee__track,
@@ -191,13 +191,12 @@ const realCount = site.clients.length;
     }
 
     /*
-     * A pass is much narrower here, and since one cycle moves exactly one pass,
-     * the shared 66s would drift at under 6px per second: slow enough to look
-     * broken rather than deliberate. Shortened to hold roughly the same speed
-     * as the desktop strip.
+     * A pass is much narrower here (about 650px), and since one cycle moves
+     * exactly one pass, the shared duration would drift too slowly to look
+     * deliberate. Shortened to hold the same ~14px per second as desktop.
      */
     .marquee__track {
-      animation-duration: 63s;
+      animation-duration: 46s;
     }
   }
 
