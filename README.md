@@ -61,11 +61,33 @@ only on hosts that support them.
 
 ## What is on the page
 
-Hero and pitch, a scrolling strip of companies worked with, four projects, a
-short About, and contact. Plus a 404.
+Hero and pitch, a scrolling strip of companies worked with, five projects (each
+with a real screenshot), a short About, and contact. Plus a 404.
 
-There are no per-project pages. Four projects with three points each says more
-than four pages nobody opens.
+There are no per-project pages. A short card per project says more than pages
+nobody opens. The projects were picked from the vault's project notes; every
+status stamp must stay true, so check the vault before changing one.
+
+### Project screenshots
+
+`public/work/*.webp` are real screenshots, never mockups. Retake one when a
+project's look changes. How each was taken (2026-10-31):
+
+- **Live sites** (Sha Perfume catalogue, Cafe Faim, Owlava): headless Chrome at
+  1440×900, e.g.
+  `chrome --headless=new --window-size=1440,900 --virtual-time-budget=12000 --screenshot=out.png <url>`.
+  Open the catalogue as `https://shaperfumes.netlify.app/?shop=shaqlawa`, or it
+  shows the one-time "Set up this screen" branch picker.
+- **POS** (not hosted): run it locally (`npm start` in its folder, port 3001),
+  sign in with the seed account from its `server/db.js`, and capture the till.
+  **Copy its `data/` folder first and put it back afterwards**: signing in writes
+  a session row to its only database, which is not under git.
+- **Label printer** (desktop app): its phone page can't start on this PC (port
+  5000 is held by Windows), so the app window itself was captured with the
+  Win32 `PrintWindow` call, which grabs only that window, then the title bar was
+  cropped off.
+
+Then crop to 16:10 and save as WebP (`sharp`: width 1200, quality 80).
 
 Contact details are real: email, phone, WhatsApp and LinkedIn. Deleting an entry
 from `links` in `src/data/site.ts` removes it from the contact section

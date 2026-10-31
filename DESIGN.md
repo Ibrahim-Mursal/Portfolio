@@ -142,9 +142,19 @@ Corners are sharp: a single `3px` radius (`--radius`) for every card, box, butto
 ### Cards / Containers (project entries, param boxes, quick-specs box)
 - **Corner Style:** 3px.
 - **Background:** paper for project entries (foreground content), paper-deep for recessed info boxes (quick specs, param box, contact panel background).
-- **Shadow Strategy:** flat at rest; project entries lift on hover (see Elevation).
+- **Shadow Strategy:** flat at rest; project entries lift on hover (see Elevation). The lift is a shadow layer (`::after`) faded in by opacity, so only opacity animates.
 - **Border:** 1px hairline-strong; project entries darken their border to `ink-large-only` on hover.
 - **Internal Padding:** roughly `1.1–1.5rem`, tighter in the mono data rows (`~0.6–0.85rem` per row).
+
+### The Work section
+- **One grid** of project entries (`h3` names), five projects he picked from his vault.
+- **Pictures:** every entry opens with a **real screenshot** (`public/work/*.webp`, ~40–60 KB, 1200px wide), set edge to edge in a 16:10 plate on recessed paper with a hairline under it. `width`/`height` set, `loading="lazy"`. Never a mockup or a stock image. The drawn line-icon marks only appear for a project without a picture.
+- **Featured entry:** the label printer spans the whole grid. Once the card is 48rem+ wide, the screenshot sits beside the facts, **mounted like a print on a mat** (padding, hairline frame, soft shadow) so the space around it reads as deliberate.
+- **Also-for line:** when a product is set up for a second client, a hairline row under the points reads `ALSO FOR` + the client name + a stamp with that install's own status (green when it's live or in use).
+- **Own work** (Owlava) has `own: true`: the maker's mark is just `I.M.`, no client initials.
+- **Links** to live work only (`cafefaim.nl ↗`); the arrow is `aria-hidden`.
+- **Narrow cards:** a container query moves the stamp onto its own line under the title below 30rem of card width, so names stay on one line. It follows the card's width, not the screen's.
+- Client and brand names carry `translate="no"` so browser translation doesn't garble them.
 
 ### Inputs / Fields
 Not used — the site has no forms. Contact happens through direct links (`mailto:`, `tel:`, WhatsApp, LinkedIn), each rendered as a real button (see Buttons above) in a wrapping row — not a table. This is the one place the datasheet vocabulary deliberately steps back: an invitation to reach out reads warmer as tappable buttons than as label-value rows, and that was a direct, explicit correction, not a style option to reconsider later.
@@ -160,7 +170,7 @@ The recurring `dt`/`dd` row pattern (the quick-specs box in the hero, the "Study
 ### Do:
 - **Do** keep the green accent to status, active state, rules, and links — if a screen has more than one thing "shouting" green at once, something is wrong.
 - **Do** use the `dt`/`dd` hairline-row pattern for a passive, read-only fact list (quick specs, the Studying box) — but reach for real buttons instead when the list is something a visitor should act on, as with Contact.
-- **Do** keep every project's status stamp a claim that is actually true (real "in use" / "in daily use" state) — the stamp motif only works because it is never decorative.
+- **Do** keep every project's status stamp a claim that is actually true — "In daily use", "Live", "Delivered", "Ready to install", "Built, not launched", "In progress" — checked against the vault's project notes. The live (green) stamp is only for work in use or open to the public right now. The stamp motif only works because it is never decorative.
 - **Do** keep both display and body type quiet and neutral — this was a direct, explicit user correction, not a style option to reconsider later.
 
 ### Don't:

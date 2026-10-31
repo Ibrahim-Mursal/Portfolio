@@ -23,8 +23,33 @@ export interface Project {
    */
   points: string[];
   stack: string[];
-  /** Which motif the card mark draws. */
-  mark: 'label' | 'bottle' | 'cup' | 'till';
+  /**
+   * A real screenshot of the project, in `public/work/`. Never a mockup: each
+   * one is the actual app or site (see the README for how they were taken).
+   */
+  image?: Picture;
+  /** Drawn motif, used only when a project has no picture. */
+  mark?: 'label' | 'bottle' | 'cup' | 'till';
+  /** Drawn across the whole grid. One per page. */
+  featured?: boolean;
+  /** His own work rather than a client's: the maker's mark drops the client initials. */
+  own?: boolean;
+  /** The same product set up for another client, each with its own true status. */
+  alsoFor?: { client: string; status: string; inUse: boolean }[];
+  /** Only for work anyone can open right now. */
+  url?: Link;
+}
+
+export interface Picture {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+export interface Link {
+  href: string;
+  label: string;
 }
 
 export const site = {
@@ -117,6 +142,12 @@ export const site = {
 
   languages: ['Kurdish', 'English', 'Arabic', 'Turkmani'],
 
+  /**
+   * The Work section, chosen by Ibrahim from the projects in his vault
+   * (C:\Desktop\MyBrain\01-Projects). Every status must be true today: when a
+   * project's real state changes, change it here. A stamp that overclaims is
+   * worse than no stamp.
+   */
   projects: [
     {
       name: 'Label Printer',
@@ -131,7 +162,15 @@ export const site = {
         'Saved layouts, reprint from history',
       ],
       stack: ['C#', '.NET 8', 'WPF', 'ASP.NET Core'],
+      image: {
+        src: '/work/label-printer.webp',
+        alt: 'The label printer app: copies, print and phone buttons, favourite and recent perfumes, a search box and perfume cards with photos.',
+        width: 1200,
+        height: 712,
+      },
       mark: 'label',
+      featured: true,
+      alsoFor: [{ client: 'Sha Attar', status: 'In use', inUse: true }],
     },
     {
       name: 'Web Catalogue',
@@ -146,7 +185,14 @@ export const site = {
         'Admin area to add and edit it',
       ],
       stack: ['React', 'Supabase'],
+      image: {
+        src: '/work/catalogue.webp',
+        alt: 'The Sha Perfume catalogue: search, filters and a grid of perfume bottles with their notes.',
+        width: 1200,
+        height: 750,
+      },
       mark: 'bottle',
+      alsoFor: [{ client: 'Sha Attar', status: 'Live', inUse: true }],
     },
     {
       name: 'Cafe Faim',
@@ -160,15 +206,27 @@ export const site = {
         'Dutch and English',
         'Marked up for Google search',
       ],
-      stack: ['HTML', 'CSS', 'JavaScript'],
+      stack: ['React', 'Vite', 'Supabase'],
+      image: {
+        src: '/work/cafe-faim.webp',
+        alt: 'The Cafe Faim home page: “We cake you happy!” over a photo of the café, with menu and cake-order buttons.',
+        width: 1200,
+        height: 750,
+      },
       mark: 'cup',
+      url: { href: 'https://www.cafefaim.nl', label: 'cafefaim.nl' },
     },
     {
+      /*
+       * Was in daily use at the shop until 2026-08-04, when the install and its
+       * data were lost. Rebuilt and tested on 2026-08-07; it runs with sample
+       * stock until the shop's real stock is entered.
+       */
       name: 'POS System',
       client: 'Shkar Store',
       kind: 'Web app',
-      status: 'In daily use',
-      inUse: true,
+      status: 'Ready to install',
+      inUse: false,
       summary: 'A till for an electronics shop selling its own stock next to partner items.',
       points: [
         'Bargaining built into every sale',
@@ -176,7 +234,35 @@ export const site = {
         'English and Kurdish, phone or desktop',
       ],
       stack: ['React', 'Express', 'SQLite'],
+      image: {
+        src: '/work/pos.webp',
+        alt: 'The POS till with sample stock: products by category and owner, and a sale of three items totalling 67,500 IQD.',
+        width: 1200,
+        height: 750,
+      },
       mark: 'till',
+    },
+    {
+      name: 'Owlava',
+      client: 'My brand',
+      kind: 'Website',
+      status: 'Live',
+      inUse: true,
+      summary: 'The website for Owlava, my software studio in Erbil.',
+      points: [
+        'Services, work and contact on their own pages',
+        'Contact form that keeps every enquiry',
+        'Dark design built around the owl logo',
+      ],
+      stack: ['Next.js', 'TypeScript', 'Cloudflare'],
+      image: {
+        src: '/work/owlava.webp',
+        alt: 'The Owlava home page: “We see in the dark. Then we ship fire.” beside the orange and white owl logo.',
+        width: 1200,
+        height: 750,
+      },
+      own: true,
+      url: { href: 'https://owlava.com', label: 'owlava.com' },
     },
   ] satisfies Project[] as Project[],
 } as const;

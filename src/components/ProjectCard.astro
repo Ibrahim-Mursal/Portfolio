@@ -1,8 +1,8 @@
 ---
 /**
- * A project, whole, styled as one entry in a component datasheet. There are
- * no separate case-study pages: four projects with three points each says
- * more than four pages nobody opens.
+ * A project, whole, styled as one entry in a component datasheet: a real
+ * screenshot, then the facts. There are no separate case-study pages: a short
+ * card per project says more than pages nobody opens.
  */
 import type { Project } from '../data/site';
 
@@ -16,107 +16,203 @@ const { project, index = 0 } = Astro.props;
 const stroke = 'var(--green)';
 const faint = 'var(--rule-strong)';
 
-/** Two-letter maker's mark: authorship on every entry, no invented date. */
+/** Maker's mark: authorship on every entry, no invented date. */
 const clientInitials = project.client
   .split(' ')
   .map((word) => word[0])
   .join('')
   .slice(0, 2)
   .toUpperCase();
+const signature = project.own ? 'I.M.' : `I.M. · ${clientInitials}`;
+const signatureTitle = project.own
+  ? 'Built by Ibrahim Mursal'
+  : `Built by Ibrahim Mursal for ${project.client}`;
 ---
 
-<article class="entry reveal" style={`--reveal-delay:${Math.min(index, 4) * 70}ms`}>
-  <div class="entry__head">
-    <div class="entry__mark" aria-hidden="true">
-      <svg viewBox="0 0 48 48" role="presentation">
-        {
-          project.mark === 'label' && (
-            <g fill="none" stroke-width="2">
-              <rect x="6" y="13" width="36" height="22" rx="2" stroke={stroke} />
-              <line x1="12" y1="21" x2="28" y2="21" stroke={stroke} />
-              <line x1="12" y1="27" x2="22" y2="27" stroke={faint} />
-              <line x1="6" y1="9" x2="42" y2="9" stroke={faint} />
-              <line x1="6" y1="39" x2="42" y2="39" stroke={faint} />
-            </g>
-          )
-        }
-        {
-          project.mark === 'bottle' && (
-            <g fill="none" stroke-width="2">
-              <path d="M18 10h12v6a10 10 0 0 1 6 9v11a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V25a10 10 0 0 1 6-9z" stroke={stroke} />
-              <line x1="20" y1="6" x2="28" y2="6" stroke={faint} />
-              <circle cx="24" cy="29" r="4" stroke={faint} />
-            </g>
-          )
-        }
-        {
-          project.mark === 'cup' && (
-            <g fill="none" stroke-width="2">
-              <path d="M11 17h22v13a8 8 0 0 1-8 8h-6a8 8 0 0 1-8-8z" stroke={stroke} />
-              <path d="M33 21h4a4 4 0 0 1 0 8h-4" stroke={faint} />
-              <line x1="18" y1="8" x2="18" y2="12" stroke={faint} />
-              <line x1="26" y1="8" x2="26" y2="12" stroke={faint} />
-            </g>
-          )
-        }
-        {
-          project.mark === 'till' && (
-            <g fill="none" stroke-width="2">
-              <rect x="7" y="20" width="34" height="18" rx="2" stroke={stroke} />
-              <rect x="14" y="9" width="20" height="11" rx="1" stroke={faint} />
-              <line x1="14" y1="28" x2="24" y2="28" stroke={stroke} />
-              <line x1="28" y1="28" x2="34" y2="28" stroke={faint} />
-            </g>
-          )
-        }
-      </svg>
+<article
+  class="entry reveal"
+  class:list={[{ 'entry--featured': project.featured, 'entry--pictured': project.image }]}
+  style={`--reveal-delay:${Math.min(index, 4) * 70}ms`}
+>
+  <div class="entry__layout">
+  {
+    project.image && (
+      <figure class="entry__picture">
+        <img
+          src={project.image.src}
+          alt={project.image.alt}
+          width={project.image.width}
+          height={project.image.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    )
+  }
+
+  <div class="entry__body">
+    <div class="entry__head">
+      {
+        !project.image && project.mark && (
+          <div class="entry__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="presentation">
+              {project.mark === 'label' && (
+                <g fill="none" stroke-width="2">
+                  <rect x="6" y="13" width="36" height="22" rx="2" stroke={stroke} />
+                  <line x1="12" y1="21" x2="28" y2="21" stroke={stroke} />
+                  <line x1="12" y1="27" x2="22" y2="27" stroke={faint} />
+                  <line x1="6" y1="9" x2="42" y2="9" stroke={faint} />
+                  <line x1="6" y1="39" x2="42" y2="39" stroke={faint} />
+                </g>
+              )}
+              {project.mark === 'bottle' && (
+                <g fill="none" stroke-width="2">
+                  <path d="M18 10h12v6a10 10 0 0 1 6 9v11a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V25a10 10 0 0 1 6-9z" stroke={stroke} />
+                  <line x1="20" y1="6" x2="28" y2="6" stroke={faint} />
+                  <circle cx="24" cy="29" r="4" stroke={faint} />
+                </g>
+              )}
+              {project.mark === 'cup' && (
+                <g fill="none" stroke-width="2">
+                  <path d="M11 17h22v13a8 8 0 0 1-8 8h-6a8 8 0 0 1-8-8z" stroke={stroke} />
+                  <path d="M33 21h4a4 4 0 0 1 0 8h-4" stroke={faint} />
+                  <line x1="18" y1="8" x2="18" y2="12" stroke={faint} />
+                  <line x1="26" y1="8" x2="26" y2="12" stroke={faint} />
+                </g>
+              )}
+              {project.mark === 'till' && (
+                <g fill="none" stroke-width="2">
+                  <rect x="7" y="20" width="34" height="18" rx="2" stroke={stroke} />
+                  <rect x="14" y="9" width="20" height="11" rx="1" stroke={faint} />
+                  <line x1="14" y1="28" x2="24" y2="28" stroke={stroke} />
+                  <line x1="28" y1="28" x2="34" y2="28" stroke={faint} />
+                </g>
+              )}
+            </svg>
+          </div>
+        )
+      }
+
+      <div class="entry__titles">
+        <p class="mono entry__client"><span translate="no">{project.client}</span> &middot; {project.kind}</p>
+        <h3 class="entry__name" translate={project.name === project.client || project.own ? 'no' : undefined}>
+          {project.name}
+        </h3>
+      </div>
+
+      <span class="stamp" class:list={[{ 'stamp--live': project.inUse }]}>{project.status}</span>
     </div>
 
-    <div class="entry__titles">
-      <p class="mono entry__client">{project.client} &middot; {project.kind}</p>
-      <h3 class="entry__name">{project.name}</h3>
-    </div>
+    <p class="entry__summary">{project.summary}</p>
 
-    <span class="stamp" class:list={[{ 'stamp--live': project.inUse }]}>{project.status}</span>
+    <ol class="entry__points">
+      {project.points.map((point, i) => (
+        <li>
+          <span class="mono entry__points-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          {point}
+        </li>
+      ))}
+    </ol>
+
+    {
+      project.alsoFor && (
+        <div class="entry__also">
+          <p class="mono entry__also-label">Also for</p>
+          <ul class="entry__also-list">
+            {project.alsoFor.map((install) => (
+              <li>
+                <span class="entry__also-client" translate="no">{install.client}</span>
+                <span class="stamp" class:list={[{ 'stamp--live': install.inUse }]}>{install.status}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <div class="entry__foot">
+      {
+        project.url && (
+          <a class="mono entry__link" href={project.url.href} rel="noopener">
+            {project.url.label}
+            <span aria-hidden="true">&nearr;</span>
+          </a>
+        )
+      }
+      <p class="mono entry__signature" translate="no" title={signatureTitle}>{signature}</p>
+    </div>
   </div>
-
-  <p class="entry__summary">{project.summary}</p>
-
-  <ol class="entry__points">
-    {project.points.map((point, i) => (
-      <li>
-        <span class="mono entry__points-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-        {point}
-      </li>
-    ))}
-  </ol>
-
-  <p
-    class="mono entry__signature"
-    title={`Built by ${clientInitials === 'IM' ? 'Ibrahim Mursal' : `Ibrahim Mursal for ${project.client}`}`}
-  >
-    I.M. &middot; {clientInitials}
-  </p>
+  </div>
 </article>
 
 <style>
   .entry {
+    container-type: inline-size;
+    position: relative;
     display: flex;
     flex-direction: column;
     background: var(--paper);
     border: 1px solid var(--rule-strong);
     border-radius: var(--radius);
-    padding: 1.4rem 1.5rem 1.5rem;
-    transition: box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
+  }
+
+  /* The hover lift is a shadow layer faded in, so only opacity animates. */
+  .entry::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    box-shadow: 0 10px 26px -18px rgba(26, 26, 24, 0.5);
+    opacity: 0;
+    transition: opacity 0.22s var(--ease);
+    pointer-events: none;
   }
 
   .entry:hover {
     border-color: var(--ink-300);
-    box-shadow: 0 10px 26px -18px rgba(26, 26, 24, 0.5);
+  }
+
+  .entry:hover::after {
+    opacity: 1;
   }
 
   .entry:hover .stamp--live {
     transform: rotate(-1.5deg) scale(1.05);
+  }
+
+  /* Picture over facts by default; side by side on a wide featured card. */
+  .entry__layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /*
+   * The picture: a real screenshot set on recessed paper like a plate in a
+   * datasheet, cut off at the top edge of the card by a hairline.
+   */
+  .entry__picture {
+    margin: 0;
+    background: var(--paper-deep);
+    border-bottom: 1px solid var(--rule-strong);
+    border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .entry__picture img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+
+  .entry__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.5rem 1.5rem;
   }
 
   .entry__head {
@@ -184,18 +280,131 @@ const clientInitials = project.client
     font-weight: 600;
   }
 
-  .entry__signature {
-    margin-top: auto;
-    padding-top: 1.35rem;
-    color: var(--ink-400);
-    letter-spacing: 0.04em;
-    text-align: right;
+  /* The same product, set up for a second shop: its own client and status. */
+  .entry__also {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--rule);
   }
 
-  @media (max-width: 26rem) {
-    /* The stamp and the title fight for room on a narrow phone. */
+  .entry__also-label {
+    color: var(--ink-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.6875rem;
+  }
+
+  .entry__also-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .entry__also-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .entry__also-client {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--ink);
+  }
+
+  .entry__foot {
+    margin-top: auto;
+    padding-top: 1.35rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .entry__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    text-underline-offset: 0.25em;
+  }
+
+  .entry__signature {
+    margin-left: auto;
+    color: var(--ink-400);
+    letter-spacing: 0.04em;
+  }
+
+  /* The flagship: drawn across the whole grid. */
+  .entry--featured {
+    grid-column: 1 / -1;
+  }
+
+  /*
+   * On a wide featured card the picture sits beside the facts instead of on
+   * top of them, so the card stays about as tall as the others.
+   */
+  @container (min-width: 48rem) {
+    .entry--featured.entry--pictured .entry__layout {
+      flex-direction: row;
+    }
+
+    /*
+     * The screenshot is mounted on the recessed paper like a print on a mat:
+     * a margin all round and a soft frame, so the space around it reads as
+     * deliberate rather than as an image that didn't fill its box.
+     */
+    .entry--featured .entry__picture {
+      flex: 0 0 56%;
+      aspect-ratio: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.25rem, 3cqi, 2.25rem);
+      border-bottom: 0;
+      border-right: 1px solid var(--rule-strong);
+      border-radius: calc(var(--radius) - 1px) 0 0 calc(var(--radius) - 1px);
+    }
+
+    .entry--featured .entry__picture img {
+      height: auto;
+      object-fit: contain;
+      border: 1px solid var(--rule-strong);
+      border-radius: 2px;
+      box-shadow: 0 14px 30px -18px rgba(26, 26, 24, 0.55);
+    }
+
+    .entry--featured .entry__body {
+      padding: 1.75rem 1.9rem 1.6rem;
+    }
+  }
+
+  /*
+   * In a narrow card the stamp and the title fight for room, and the title
+   * loses. Below this width the stamp takes its own line under the title. A
+   * container query, so it follows the card's width, not the screen's.
+   */
+  @container (max-width: 30rem) {
     .entry__head {
       flex-wrap: wrap;
+      row-gap: 0.6rem;
+    }
+
+    .entry__titles {
+      flex-basis: 100%;
+    }
+
+    .entry__head:has(.entry__mark) .entry__titles {
+      flex-basis: calc(100% - 3.65rem);
+    }
+
+    .entry__head:has(.entry__mark) > .stamp {
+      margin-left: 3.65rem;
     }
   }
 
